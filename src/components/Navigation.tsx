@@ -25,11 +25,7 @@ const Navigation = () => {
   return (
     <>
       <nav 
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-600 ${
-          scrolled 
-            ? 'bg-ink-900/95 backdrop-blur-frost shadow-heavy' 
-            : 'bg-transparent'
-        }`}
+        className="fixed top-0 left-0 right-0 z-50 bg-transparent transition-all duration-600"
       >
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
