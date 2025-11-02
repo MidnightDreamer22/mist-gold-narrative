@@ -11,6 +11,7 @@ const Navigation = ({ onNavigate }: NavigationProps) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,6 +46,16 @@ const Navigation = ({ onNavigate }: NavigationProps) => {
       >
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-center relative">
+            {/* Home Button - Desktop (left side, hidden on home page) */}
+            {!isHomePage && (
+              <Link
+                to="/"
+                className="hidden md:block absolute left-0 text-xl font-display text-mist-300 hover:text-gold-400 tracking-tight transition-colors"
+              >
+                Simona
+              </Link>
+            )}
+            
             {/* Desktop Navigation - Centered */}
             <div className="hidden md:flex items-center gap-8">
               {navLinks.map(link => (
@@ -77,9 +88,18 @@ const Navigation = ({ onNavigate }: NavigationProps) => {
 
             {/* Mobile - Brand + Hamburger + Cart */}
             <div className="md:hidden flex items-center justify-between w-full">
-              <span className="text-xl font-display text-mist-300 tracking-tight">
-                Simona
-              </span>
+              {isHomePage ? (
+                <span className="text-xl font-display text-mist-300 tracking-tight">
+                  Simona
+                </span>
+              ) : (
+                <Link
+                  to="/"
+                  className="text-xl font-display text-mist-300 hover:text-gold-400 tracking-tight transition-colors"
+                >
+                  Simona
+                </Link>
+              )}
               <div className="flex items-center gap-2">
                 <CartDrawer />
                 <button 
