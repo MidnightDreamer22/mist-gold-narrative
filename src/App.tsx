@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import CinematicBackground from "./components/CinematicBackground";
 import Index from "./pages/Index";
+import IntroReserve from "./pages/IntroReserve";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,8 @@ const App = () => {
           
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/intro-reserve" element={<IntroReserve />} />
+            <Route path="/dive-in" element={<IntroReserve />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

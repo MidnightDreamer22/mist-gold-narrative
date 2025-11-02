@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
 import FullScreenPanel from '@/components/FullScreenPanel';
@@ -11,6 +12,7 @@ import { useFooterReveal } from '@/hooks/useFooterReveal';
 import heroPoster from '@/assets/hero-video-poster.jpg';
 
 const Index = () => {
+  const navigate = useNavigate();
   const [showCTA, setShowCTA] = useState(false);
   const [activePanel, setActivePanel] = useState<string | null>(null);
   const [selectedMenuCategory, setSelectedMenuCategory] = useState<string | null>(null);
@@ -95,7 +97,7 @@ const Index = () => {
             {/* Dive In CTA */}
             {showCTA && (
               <Button
-                onClick={openReservation}
+                onClick={() => navigate('/intro-reserve')}
                 size="lg"
                 className="bg-gold-400 hover:bg-gold-300 text-ink-900 text-lg px-8 py-6 rounded-full font-semibold shadow-heavy"
                 style={{
