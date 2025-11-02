@@ -124,7 +124,7 @@ const ReservationPanel = () => {
             Reservation Confirmed
           </h2>
           
-          <div className="bg-ink-700 rounded-lg border border-border p-8 space-y-6">
+          <div className="bg-ink-700 !bg-opacity-100 rounded-lg border border-border p-8 space-y-6">
             <p className="text-xl text-mist-300">
               Thank you, {formData.name}!
             </p>
@@ -173,7 +173,7 @@ const ReservationPanel = () => {
         <div className="grid lg:grid-cols-12 gap-8 mb-8">
           {/* LEFT: Details Form */}
           <div className="lg:col-span-5">
-            <form onSubmit={handleSubmit} className="bg-ink-700 rounded-lg border border-border p-8 space-y-6" style={{ backgroundColor: 'hsl(var(--ink-700))' }}>
+            <form onSubmit={handleSubmit} className="bg-ink-700 !bg-opacity-100 opacity-100 rounded-lg border border-border p-8 space-y-6">
               <div className="space-y-6">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-mist-100">Name *</Label>
@@ -181,7 +181,7 @@ const ReservationPanel = () => {
                     id="name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="bg-ink-900 border-border text-mist-300"
+                    className="bg-ink-900 !bg-opacity-100 border-border text-mist-300"
                     required
                   />
                 </div>
@@ -193,7 +193,7 @@ const ReservationPanel = () => {
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className="bg-ink-900 border-border text-mist-300"
+                    className="bg-ink-900 !bg-opacity-100 border-border text-mist-300"
                     required
                   />
                 </div>
@@ -205,17 +205,17 @@ const ReservationPanel = () => {
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="bg-ink-900 border-border text-mist-300"
+                    className="bg-ink-900 !bg-opacity-100 border-border text-mist-300"
                   />
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="partySize" className="text-mist-100">Party Size *</Label>
                   <Select value={formData.partySize} onValueChange={(value) => setFormData({ ...formData, partySize: value })}>
-                    <SelectTrigger className="bg-ink-900 border-border text-mist-300">
+                    <SelectTrigger className="bg-ink-900 !bg-opacity-100 border-border text-mist-300">
                       <SelectValue placeholder="Select size" />
                     </SelectTrigger>
-                    <SelectContent className="bg-ink-900 border-border">
+                    <SelectContent className="bg-ink-900 !bg-opacity-100 border-border z-50">
                       {[1, 2, 3, 4, 5, 6, 7, 8].map(num => (
                         <SelectItem key={num} value={String(num)} className="text-mist-300">
                           {num} {num === 1 ? 'guest' : 'guests'}
@@ -231,13 +231,13 @@ const ReservationPanel = () => {
                     <PopoverTrigger asChild>
                       <Button
                         variant="outline"
-                        className="w-full justify-start text-left bg-ink-900 border-border text-mist-300 hover:bg-ink-700"
+                        className="w-full justify-start text-left bg-ink-900 !bg-opacity-100 border-border text-mist-300 hover:bg-ink-700"
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
                         {date ? format(date, 'PPP') : 'Pick a date'}
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0 bg-ink-900 border-border">
+                    <PopoverContent className="w-auto p-0 bg-ink-900 !bg-opacity-100 border-border z-50">
                       <Calendar
                         mode="single"
                         selected={date}
@@ -255,7 +255,7 @@ const ReservationPanel = () => {
                     id="time"
                     value={formData.time || 'Click a time slot →'}
                     readOnly
-                    className="bg-ink-900 border-border text-mist-300"
+                    className="bg-ink-900 !bg-opacity-100 border-border text-mist-300"
                     placeholder="Select from available times"
                   />
                 </div>
@@ -266,7 +266,7 @@ const ReservationPanel = () => {
                     id="notes"
                     value={formData.notes}
                     onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                    className="bg-ink-900 border-border text-mist-300 min-h-[100px]"
+                    className="bg-ink-900 !bg-opacity-100 border-border text-mist-300 min-h-[100px]"
                     placeholder="Any special requests, dietary restrictions, or celebrating an occasion?"
                   />
                 </div>
@@ -299,7 +299,7 @@ const ReservationPanel = () => {
             <div className="lg:sticky lg:top-24 space-y-4">
               {/* Inline Info Block - "Before you book" */}
               <div 
-                className="bg-ink-700 rounded-lg border border-border p-6"
+                className="bg-ink-700 !bg-opacity-100 rounded-lg border border-border p-6"
                 style={{
                   opacity: 0,
                   transform: 'translateY(10px)',
@@ -364,7 +364,7 @@ const ReservationPanel = () => {
               {/* Time Slot Availability */}
               {date && formData.partySize ? (
                 <div 
-                  className="bg-ink-700 rounded-lg border border-border p-6 space-y-4"
+                  className="bg-ink-700 !bg-opacity-100 rounded-lg border border-border p-6 space-y-4"
                   style={{
                     opacity: 0,
                     transform: 'translateY(10px)',
@@ -413,7 +413,7 @@ const ReservationPanel = () => {
                 </div>
               ) : (
                 <div 
-                  className="bg-ink-700 rounded-lg border border-border p-12 text-center"
+                  className="bg-ink-700 !bg-opacity-100 rounded-lg border border-border p-12 text-center"
                   style={{
                     opacity: 0,
                     transform: 'translateY(10px)',
@@ -430,7 +430,7 @@ const ReservationPanel = () => {
 
               {/* Google Map */}
               <div 
-                className="bg-ink-700 rounded-lg border border-border overflow-hidden"
+                className="bg-ink-700 !bg-opacity-100 rounded-lg border border-border overflow-hidden"
                 style={{
                   opacity: 0,
                   transform: 'translateY(10px)',
