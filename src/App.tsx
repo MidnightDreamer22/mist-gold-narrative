@@ -7,6 +7,8 @@ import Navigation from "./components/Navigation";
 import CinematicBackground from "./components/CinematicBackground";
 import Index from "./pages/Index";
 import IntroReserve from "./pages/IntroReserve";
+import Shop from "./pages/Shop";
+import Product from "./pages/Product";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +37,8 @@ const App = () => {
             <Route path="/" element={<Index />} />
             <Route path="/intro-reserve" element={<IntroReserve />} />
             <Route path="/dive-in" element={<IntroReserve />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/product/:handle" element={<Product />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
