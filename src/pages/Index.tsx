@@ -298,33 +298,63 @@ const Index = () => {
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid md:grid-cols-3 gap-12">
             <div className="space-y-4">
-              <h3 className="text-2xl font-display text-mist-100">Address</h3>
+              <h3 className="text-2xl font-display text-mist-100">Location</h3>
               <p className="text-mist-300 leading-relaxed">
-                📄 DOCX Footer Content Placeholder
+                80 Aram Street<br />
+                Yerevan, Armenia
               </p>
-              <p className="text-mist-300 text-sm">
-                Address and location information will be imported from the DOCX file.
-              </p>
+              <a 
+                href="https://maps.google.com/?q=80+Aram+Street,Yerevan,Armenia" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-block text-gold-400 hover:underline text-sm"
+              >
+                View on Map →
+              </a>
             </div>
 
             <div className="space-y-4">
               <h3 className="text-2xl font-display text-mist-100">Hours</h3>
               <p className="text-mist-300 leading-relaxed">
-                📄 DOCX Footer Content Placeholder
-              </p>
-              <p className="text-mist-300 text-sm">
-                Hours and schedule will be imported from the DOCX file.
+                Every day<br />
+                <span className="text-gold-400 font-semibold">18:30 - 02:00</span>
               </p>
             </div>
 
             <div className="space-y-4">
               <h3 className="text-2xl font-display text-mist-100">Contact</h3>
-              <p className="text-mist-300 leading-relaxed">
-                📄 DOCX Footer Content Placeholder
-              </p>
-              <p className="text-mist-300 text-sm">
-                Contact information and socials will be imported from the DOCX file.
-              </p>
+              <div className="space-y-2 text-mist-300">
+                <p>
+                  <a href="tel:+37495426619" className="hover:text-gold-400 transition-colors">
+                    +374 95 426 619
+                  </a>
+                </p>
+                <p>
+                  <a href="mailto:simonebarhome@gmail.com" className="hover:text-gold-400 transition-colors">
+                    simonebarhome@gmail.com
+                  </a>
+                </p>
+                <div className="flex gap-4 mt-4">
+                  <a 
+                    href="https://instagram.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-gold-400 hover:text-gold-300 transition-colors"
+                    aria-label="Instagram"
+                  >
+                    Instagram
+                  </a>
+                  <a 
+                    href="https://facebook.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-gold-400 hover:text-gold-300 transition-colors"
+                    aria-label="Facebook"
+                  >
+                    Facebook
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
 

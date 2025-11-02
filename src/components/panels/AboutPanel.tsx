@@ -15,29 +15,30 @@ const AboutPanel = () => {
                 Our Story
               </h2>
               
-              <div className="prose prose-invert max-w-none space-y-4 text-mist-300">
+              <div className="prose prose-invert max-w-none space-y-6 text-mist-300">
+                <h3 className="text-3xl font-display text-gold-400">
+                  The Spirit of the City
+                </h3>
+                
                 <p className="text-lg leading-relaxed">
-                  <strong>DOCX Story Content Placeholder</strong>
+                  Born in 2016 Simona took its name from Simone de Beauvoir — a muse of freedom and thought — then softened to Simona, easier to say but never easier to forget.
                 </p>
                 
                 <p className="leading-relaxed">
-                  This section will display the story content from your DOCX file. 
-                  The content should include the Simona origin story, "Spirit of the City" narrative, 
-                  and brand philosophy.
+                  It began when Yerevan barely knew the language of mixology. From a tiny room, Simona poured its first crafted cocktails and spun its first vinyls of funk and house, igniting a movement that would reshape the city&apos;s nights.
                 </p>
+                
+                <hr className="border-border my-6" />
+                
+                <p className="leading-relaxed italic">
+                  Simona became more than a bar — a haven for artists, dreamers, and creators, where ideas mixed as freely as drinks.
+                </p>
+                
+                <hr className="border-border my-6" />
                 
                 <p className="leading-relaxed">
-                  Content will be imported from the DOCX file and rendered here with proper 
-                  typographic hierarchy, preserving headings, paragraphs, lists, and emphasis 
-                  while maintaining the noir/minimal aesthetic.
+                  Today, Simona remains what it has always been — a meeting point of sound and spirit, where every night tells a story and every glass remembers the rhythm of Yerevan.
                 </p>
-                
-                <div className="mt-8 p-4 border border-gold-400/20 rounded bg-ink-700/50">
-                  <p className="text-sm text-gold-400">
-                    📄 To add your story: Upload your DOCX file and the content will automatically 
-                    replace this placeholder with proper formatting.
-                  </p>
-                </div>
               </div>
             </div>
           </FrostCard>

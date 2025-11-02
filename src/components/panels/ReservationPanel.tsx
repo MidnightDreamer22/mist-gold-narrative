@@ -274,32 +274,43 @@ const ReservationPanel = () => {
                 animation: 'expandDown 500ms cubic-bezier(.16,1,.3,1) forwards'
               }}
             >
-              <div className="prose prose-invert max-w-none space-y-4 text-mist-300">
-                <h3 className="text-2xl font-display text-mist-100">Reservation Information</h3>
+              <div className="prose prose-invert max-w-none space-y-6 text-mist-300">
+                <h3 className="text-2xl font-display text-mist-100 mb-4">How to Reserve</h3>
                 
-                <p className="text-lg font-semibold text-gold-400">
-                  📄 DOCX Content Placeholder
+                <ol className="list-decimal pl-6 space-y-3">
+                  <li>
+                    <strong>Via Website:</strong> Once your reservation is ready, you will receive a confirmation message to your email (confirmation within 1 hour)
+                  </li>
+                  <li>
+                    <strong>Instagram or Facebook:</strong> Send us a direct message (confirmation within 1 hour)
+                  </li>
+                  <li>
+                    <strong>Urgent reservations:</strong> Call us via mobile number (14:00-22:00)
+                  </li>
+                </ol>
+
+                <h3 className="text-2xl font-display text-mist-100 mt-8 mb-4">Working Hours</h3>
+                <p className="text-lg">
+                  Every day: <strong className="text-gold-400">18:30 - 02:00</strong>
                 </p>
-                
+
+                <h3 className="text-2xl font-display text-mist-100 mt-8 mb-4">Dress Code</h3>
                 <p>
-                  This section will display all reservation policies, notations, disclaimers, 
-                  and instructions from your DOCX file. The content will include:
+                  Express yourself, but entrance control is applicable.
                 </p>
-                
-                <ul className="list-disc pl-6 space-y-2">
-                  <li>Reservation policies and cancellation terms</li>
-                  <li>Dress code requirements</li>
-                  <li>Group booking guidelines</li>
-                  <li>Special event information</li>
-                  <li>COVID-19 safety protocols</li>
-                  <li>Payment and deposit policies</li>
-                </ul>
-                
-                <div className="mt-6 p-4 border border-gold-400/20 rounded bg-ink-900/50">
-                  <p className="text-sm text-gold-400">
-                    📄 To add your policies: Upload your DOCX file and the content will automatically 
-                    appear here with proper formatting (headings, lists, emphasis preserved).
+
+                <h3 className="text-2xl font-display text-mist-100 mt-8 mb-4">House Rules</h3>
+                <div className="p-4 border border-gold-400/20 rounded bg-ink-900/50">
+                  <p className="text-gold-400">
+                    <strong>It&apos;s not allowed:</strong> Loud talks outside the bar. Neighborhood comfort is our priority.
                   </p>
+                </div>
+
+                <h3 className="text-2xl font-display text-mist-100 mt-8 mb-4">Contact</h3>
+                <div className="space-y-2">
+                  <p><strong>Phone:</strong> <a href="tel:+37495426619" className="text-gold-400 hover:underline">+374 95 426 619</a></p>
+                  <p><strong>Email:</strong> <a href="mailto:simonebarhome@gmail.com" className="text-gold-400 hover:underline">simonebarhome@gmail.com</a></p>
+                  <p><strong>Address:</strong> 80 Aram st, Yerevan, Armenia</p>
                 </div>
               </div>
             </div>
