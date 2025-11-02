@@ -20,7 +20,7 @@ const CinematicBackground = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-0 overflow-hidden">
+    <div className="fixed inset-0 z-0 overflow-hidden" style={{ pointerEvents: 'none' }}>
       {/* Poster Image */}
       <div
         className="absolute inset-0 bg-cover bg-center transition-opacity duration-300"

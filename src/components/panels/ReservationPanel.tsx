@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -10,12 +10,19 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
 import { ChevronDown, ChevronUp, Calendar as CalendarIcon, Download } from 'lucide-react';
 import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
+
+interface TimeSlot {
+  time: string;
+  available: boolean;
+}
 
 const ReservationPanel = () => {
   const { toast } = useToast();
   const [expanded, setExpanded] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [date, setDate] = useState<Date>();
+  const [availableSlots, setAvailableSlots] = useState<TimeSlot[]>([]);
   
   const [formData, setFormData] = useState({
     name: '',
@@ -26,6 +33,40 @@ const ReservationPanel = () => {
     notes: '',
     consent: false
   });
+
+  // Generate available time slots based on date and party size
+  useEffect(() => {
+    if (!date || !formData.partySize) {
+      setAvailableSlots([]);
+      return;
+    }
+
+    const baseSlots = ['17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00'];
+    const partySize = parseInt(formData.partySize);
+    
+    // Filter out early slots for large parties
+    const filteredSlots = partySize > 4 
+      ? baseSlots.filter(slot => slot >= '19:00')
+      : baseSlots;
+
+    // Mock availability: randomly mark 30-40% as unavailable
+    const slots = filteredSlots.map(time => ({
+      time,
+      available: Math.random() > 0.35
+    }));
+
+    setAvailableSlots(slots);
+
+    // Clear selected time if it becomes unavailable
+    if (formData.time && !slots.find(s => s.time === formData.time && s.available)) {
+      setFormData(prev => ({ ...prev, time: '' }));
+      toast({
+        title: "Time Unavailable",
+        description: "Your selected time is no longer available. Please choose another.",
+        variant: "destructive"
+      });
+    }
+  }, [date, formData.partySize, formData.time, toast]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -123,136 +164,191 @@ const ReservationPanel = () => {
 
   return (
     <section className="snap-section min-h-screen bg-ink-900">
-      <div className="section-content container mx-auto max-w-4xl px-6 py-20">
+      <div className="section-content container mx-auto max-w-7xl px-6 py-20">
         <h2 className="text-5xl md:text-6xl font-display text-mist-100 text-center mb-12">
           Reserve a Table
         </h2>
 
-        {/* Reservation Form */}
-        <form onSubmit={handleSubmit} className="bg-ink-700 rounded-lg border border-border p-8 mb-8 space-y-6">
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <Label htmlFor="name" className="text-mist-100">Name *</Label>
-              <Input
-                id="name"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="bg-ink-900 border-border text-mist-300"
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="email" className="text-mist-100">Email *</Label>
-              <Input
-                id="email"
-                type="email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="bg-ink-900 border-border text-mist-300"
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="phone" className="text-mist-100">Phone</Label>
-              <Input
-                id="phone"
-                type="tel"
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="bg-ink-900 border-border text-mist-300"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="partySize" className="text-mist-100">Party Size *</Label>
-              <Select value={formData.partySize} onValueChange={(value) => setFormData({ ...formData, partySize: value })}>
-                <SelectTrigger className="bg-ink-900 border-border text-mist-300">
-                  <SelectValue placeholder="Select size" />
-                </SelectTrigger>
-                <SelectContent className="bg-ink-900 border-border">
-                  {[1, 2, 3, 4, 5, 6, 7, 8].map(num => (
-                    <SelectItem key={num} value={String(num)} className="text-mist-300">
-                      {num} {num === 1 ? 'guest' : 'guests'}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-mist-100">Date *</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start text-left bg-ink-900 border-border text-mist-300 hover:bg-ink-700"
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {date ? format(date, 'PPP') : 'Pick a date'}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0 bg-ink-900 border-border">
-                  <Calendar
-                    mode="single"
-                    selected={date}
-                    onSelect={setDate}
-                    disabled={(date) => date < new Date()}
-                    className="rounded-md"
+        {/* Two-Region Layout: Details + Availability Table */}
+        <div className="grid lg:grid-cols-12 gap-8 mb-8">
+          {/* LEFT: Details Form */}
+          <div className="lg:col-span-5">
+            <form onSubmit={handleSubmit} className="bg-ink-700 rounded-lg border border-border p-8 space-y-6">
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="text-mist-100">Name *</Label>
+                  <Input
+                    id="name"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="bg-ink-900 border-border text-mist-300"
+                    required
                   />
-                </PopoverContent>
-              </Popover>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-mist-100">Email *</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="bg-ink-900 border-border text-mist-300"
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="phone" className="text-mist-100">Phone</Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="bg-ink-900 border-border text-mist-300"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="partySize" className="text-mist-100">Party Size *</Label>
+                  <Select value={formData.partySize} onValueChange={(value) => setFormData({ ...formData, partySize: value })}>
+                    <SelectTrigger className="bg-ink-900 border-border text-mist-300">
+                      <SelectValue placeholder="Select size" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-ink-900 border-border">
+                      {[1, 2, 3, 4, 5, 6, 7, 8].map(num => (
+                        <SelectItem key={num} value={String(num)} className="text-mist-300">
+                          {num} {num === 1 ? 'guest' : 'guests'}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label className="text-mist-100">Date *</Label>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="w-full justify-start text-left bg-ink-900 border-border text-mist-300 hover:bg-ink-700"
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {date ? format(date, 'PPP') : 'Pick a date'}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0 bg-ink-900 border-border">
+                      <Calendar
+                        mode="single"
+                        selected={date}
+                        onSelect={setDate}
+                        disabled={(date) => date < new Date()}
+                        className="rounded-md"
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="time" className="text-mist-100">Selected Time *</Label>
+                  <Input
+                    id="time"
+                    value={formData.time || 'Click a time slot →'}
+                    readOnly
+                    className="bg-ink-900 border-border text-mist-300"
+                    placeholder="Select from available times"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="notes" className="text-mist-100">Special Requests / Occasion</Label>
+                  <Textarea
+                    id="notes"
+                    value={formData.notes}
+                    onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+                    className="bg-ink-900 border-border text-mist-300 min-h-[100px]"
+                    placeholder="Any special requests, dietary restrictions, or celebrating an occasion?"
+                  />
+                </div>
+
+                <div className="flex items-start space-x-3">
+                  <Checkbox
+                    id="consent"
+                    checked={formData.consent}
+                    onCheckedChange={(checked) => setFormData({ ...formData, consent: checked as boolean })}
+                    className="mt-1"
+                  />
+                  <Label htmlFor="consent" className="text-sm text-mist-300 leading-relaxed">
+                    I agree to receive reservation confirmation and reminders via email/SMS
+                  </Label>
+                </div>
+
+                <Button
+                  type="submit"
+                  size="lg"
+                  className="w-full bg-gold-400 hover:bg-gold-300 text-ink-900 text-lg py-6"
+                >
+                  Confirm Reservation
+                </Button>
+              </div>
+            </form>
+          </div>
+
+          {/* RIGHT: Availability Table */}
+          <div className="lg:col-span-7">
+            <div className="lg:sticky lg:top-24">
+              {date && formData.partySize ? (
+                <div className="bg-ink-700 rounded-lg border border-border p-6 space-y-4">
+                  <div>
+                    <h3 className="text-2xl font-display text-mist-100">Available Times</h3>
+                    <p className="text-sm text-mist-300 mt-2">
+                      {format(date, 'MMMM d, yyyy')} • {formData.partySize} {parseInt(formData.partySize) === 1 ? 'guest' : 'guests'}
+                    </p>
+                  </div>
+                  
+                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+                    {availableSlots.map((slot, index) => (
+                      <button
+                        key={slot.time}
+                        type="button"
+                        disabled={!slot.available}
+                        onClick={() => setFormData({...formData, time: slot.time})}
+                        className={cn(
+                          "p-3 rounded border transition-all text-center",
+                          "opacity-0 animate-fade-in",
+                          slot.time === formData.time && "bg-gold-400 text-ink-900 border-gold-400 shadow-lg",
+                          slot.available && slot.time !== formData.time && "border-border hover:border-gold-400 hover:bg-ink-600 text-mist-300",
+                          !slot.available && "opacity-40 cursor-not-allowed text-mist-500 line-through"
+                        )}
+                        style={{
+                          animationDelay: `${index * 60}ms`,
+                          animationDuration: '240ms',
+                          animationFillMode: 'forwards'
+                        }}
+                      >
+                        <div className="text-base font-medium">{slot.time}</div>
+                        {!slot.available && <div className="text-xs mt-1">Full</div>}
+                      </button>
+                    ))}
+                  </div>
+
+                  {availableSlots.length === 0 && (
+                    <p className="text-center text-mist-400 py-8">
+                      No available times for this date. Please choose another date.
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <div className="bg-ink-700 rounded-lg border border-border p-12 text-center">
+                  <CalendarIcon className="mx-auto h-16 w-16 text-mist-500 mb-4" />
+                  <p className="text-mist-300 text-lg">
+                    Select date & party size to view availability
+                  </p>
+                </div>
+              )}
             </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="time" className="text-mist-100">Time *</Label>
-              <Select value={formData.time} onValueChange={(value) => setFormData({ ...formData, time: value })}>
-                <SelectTrigger className="bg-ink-900 border-border text-mist-300">
-                  <SelectValue placeholder="Select time" />
-                </SelectTrigger>
-                <SelectContent className="bg-ink-900 border-border">
-                  {['17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00'].map(time => (
-                    <SelectItem key={time} value={time} className="text-mist-300">
-                      {time}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
           </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="notes" className="text-mist-100">Special Requests / Occasion</Label>
-            <Textarea
-              id="notes"
-              value={formData.notes}
-              onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-              className="bg-ink-900 border-border text-mist-300 min-h-[100px]"
-              placeholder="Any special requests, dietary restrictions, or celebrating an occasion?"
-            />
-          </div>
-
-          <div className="flex items-start space-x-3">
-            <Checkbox
-              id="consent"
-              checked={formData.consent}
-              onCheckedChange={(checked) => setFormData({ ...formData, consent: checked as boolean })}
-              className="mt-1"
-            />
-            <Label htmlFor="consent" className="text-sm text-mist-300 leading-relaxed">
-              I agree to receive reservation confirmation and reminders via email/SMS
-            </Label>
-          </div>
-
-          <Button
-            type="submit"
-            size="lg"
-            className="w-full bg-gold-400 hover:bg-gold-300 text-ink-900 text-lg py-6"
-          >
-            Confirm Reservation
-          </Button>
-        </form>
+        </div>
 
         {/* DOCX Policies Section */}
         <div className="bg-ink-700 rounded-lg border border-border overflow-hidden">

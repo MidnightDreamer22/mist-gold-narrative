@@ -86,12 +86,14 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', -apple-system, system-ui, sans-serif;
+    padding-bottom: 32px;
   }
   
-  html {
-    scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  overscroll-behavior-y: contain;
+}
   
   .snap-section {
     scroll-snap-align: start;
@@ -191,6 +193,10 @@ All colors MUST be HSL.
   
   /* Reduced motion support */
   @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-snap-type: none;
+    }
+    
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;

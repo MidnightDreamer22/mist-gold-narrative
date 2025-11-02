@@ -327,17 +327,25 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer 
-        ref={footerRef}
-        className="relative z-10 border-t border-border py-16 transition-all"
-        style={{
-          minHeight: '400px',
-          opacity: footerVisible ? 1 : 0,
-          transform: footerVisible ? 'translateY(0)' : 'translateY(10px)',
-          transition: 'opacity 480ms var(--easing-enter), transform 480ms var(--easing-enter)'
+      {/* Footer - wrapped in snap section */}
+      <section 
+        className="snap-section"
+        style={{ 
+          minHeight: '60vh',
+          scrollSnapAlign: 'end',
+          scrollSnapStop: 'always'
         }}
       >
+        <footer 
+          ref={footerRef}
+          className="relative z-10 border-t border-border py-16"
+          style={{
+            minHeight: '480px',
+            opacity: footerVisible ? 1 : 0,
+            transform: footerVisible ? 'translateY(0)' : 'translateY(10px)',
+            transition: 'opacity 480ms var(--easing-enter), transform 480ms var(--easing-enter)'
+          }}
+        >
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid md:grid-cols-3 gap-12">
             <div className="space-y-4">
@@ -408,6 +416,7 @@ const Index = () => {
           </div>
         </div>
       </footer>
+      </section>
 
       {/* Panels */}
       <FullScreenPanel

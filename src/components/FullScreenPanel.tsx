@@ -45,7 +45,9 @@ const FullScreenPanel = ({ isOpen, onClose, title, children }: FullScreenPanelPr
       <div 
         className="fixed inset-0 z-40 bg-ink-900/60 backdrop-blur-sm"
         style={{
-          animation: 'scrimEnter 150ms ease-out forwards'
+          opacity: isOpen ? 1 : 0,
+          transition: 'opacity 180ms ease-out',
+          pointerEvents: isOpen ? 'auto' : 'none'
         }}
         onClick={onClose}
       />
@@ -54,7 +56,12 @@ const FullScreenPanel = ({ isOpen, onClose, title, children }: FullScreenPanelPr
       <div 
         className="fixed inset-0 z-50 bg-ink-900"
         style={{
-          animation: 'panelEnter var(--timing-enter) var(--easing-enter) forwards'
+          opacity: isOpen ? 1 : 0,
+          transform: isOpen ? 'translateY(0) scale(1)' : 'translateY(12px) scale(0.985)',
+          transition: isOpen 
+            ? `opacity var(--timing-enter) var(--easing-enter), transform var(--timing-enter) var(--easing-enter)`
+            : `opacity var(--timing-exit) var(--easing-exit), transform var(--timing-exit) var(--easing-exit)`,
+          pointerEvents: isOpen ? 'auto' : 'none'
         }}
       >
       {/* Header */}
