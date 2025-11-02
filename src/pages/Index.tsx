@@ -8,6 +8,7 @@ import GalleryPanel from '@/components/panels/GalleryPanel';
 import MenuPanel from '@/components/panels/MenuPanel';
 import MenuDetailPanel from '@/components/panels/MenuDetailPanel';
 import ReservationPanel from '@/components/panels/ReservationPanel';
+import DiveInModal from '@/components/DiveInModal';
 import { useFooterReveal } from '@/hooks/useFooterReveal';
 import heroPoster from '@/assets/hero-video-poster.jpg';
 
@@ -16,6 +17,7 @@ const Index = () => {
   const [showCTA, setShowCTA] = useState(false);
   const [activePanel, setActivePanel] = useState<string | null>(null);
   const [selectedMenuCategory, setSelectedMenuCategory] = useState<string | null>(null);
+  const [diveInModalOpen, setDiveInModalOpen] = useState(false);
   const { footerRef, isVisible: footerVisible } = useFooterReveal();
 
   useEffect(() => {
@@ -97,7 +99,7 @@ const Index = () => {
             {/* Dive In CTA */}
             {showCTA && (
               <Button
-                onClick={() => navigate('/intro-reserve')}
+                onClick={() => setDiveInModalOpen(true)}
                 size="lg"
                 className="bg-gold-400 hover:bg-gold-300 text-ink-900 text-lg px-8 py-6 rounded-full font-semibold shadow-heavy"
                 style={{
@@ -105,7 +107,7 @@ const Index = () => {
                   minHeight: '44px'
                 }}
               >
-                Dive in
+                Dive In
               </Button>
             )}
           </div>
@@ -460,6 +462,35 @@ const Index = () => {
       >
         <ReservationPanel />
       </FullScreenPanel>
+
+      {/* Dive In Modal */}
+      <DiveInModal 
+        isOpen={diveInModalOpen}
+        onClose={() => setDiveInModalOpen(false)}
+      />
+
+      {/* Floating Dive In Button */}
+      <button
+        onClick={() => setDiveInModalOpen(true)}
+        className="fixed bottom-8 right-8 z-50 bg-gold-400 hover:bg-gold-300 text-ink-900 px-6 py-4 rounded-full font-semibold shadow-heavy transition-all hover:scale-105 focus:outline-none focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:ring-offset-ink-900"
+        style={{
+          animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+        }}
+        aria-label="Open Dive In modal"
+      >
+        DIVE IN
+      </button>
+
+      <style>{`
+        @keyframes pulse {
+          0%, 100% {
+            box-shadow: 0 0 0 0 rgba(201, 164, 108, 0.7);
+          }
+          50% {
+            box-shadow: 0 0 0 12px rgba(201, 164, 108, 0);
+          }
+        }
+      `}</style>
     </>
   );
 };
