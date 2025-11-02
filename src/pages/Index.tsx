@@ -169,6 +169,173 @@ const Index = () => {
         </section>
       </div>
 
+      {/* About Intro Section */}
+      <section id="about-intro" className="snap-section min-h-screen bg-ink-900 flex items-center justify-center">
+        <div className="section-content container mx-auto px-6 py-20 max-w-6xl">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <h2 className="text-5xl md:text-6xl font-display text-mist-100">
+                About Simona
+              </h2>
+              <p className="text-xl text-mist-300 leading-relaxed">
+                Discover the story behind "Spirit of the City" — our philosophy, 
+                heritage, and commitment to craft.
+              </p>
+              <Button
+                onClick={() => openPanel('about')}
+                size="lg"
+                className="bg-gold-400 hover:bg-gold-300 text-ink-900 text-lg px-8 py-6 rounded-full font-semibold"
+              >
+                Open
+              </Button>
+            </div>
+            <div className="relative h-[400px] rounded-lg overflow-hidden">
+              <img 
+                src="/src/assets/about-background.jpg" 
+                alt="Simona interior"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery Intro Section */}
+      <section id="gallery-intro" className="snap-section min-h-screen bg-ink-700 flex items-center justify-center">
+        <div className="section-content container mx-auto px-6 py-20 max-w-6xl">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="relative h-[400px] rounded-lg overflow-hidden order-2 md:order-1">
+              <img 
+                src="/src/assets/gallery-1.jpg" 
+                alt="Gallery preview"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="space-y-6 order-1 md:order-2">
+              <h2 className="text-5xl md:text-6xl font-display text-mist-100">
+                Gallery
+              </h2>
+              <p className="text-xl text-mist-300 leading-relaxed">
+                Step into our world through a curated collection of moments, 
+                ambiance, and artistry.
+              </p>
+              <Button
+                onClick={() => openPanel('gallery')}
+                size="lg"
+                className="bg-gold-400 hover:bg-gold-300 text-ink-900 text-lg px-8 py-6 rounded-full font-semibold"
+              >
+                Open
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Menu Intro Section */}
+      <section id="menu-intro" className="snap-section min-h-screen bg-ink-900 flex items-center justify-center">
+        <div className="section-content container mx-auto px-6 py-20 max-w-6xl">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="space-y-6">
+              <h2 className="text-5xl md:text-6xl font-display text-mist-100">
+                Menu
+              </h2>
+              <p className="text-xl text-mist-300 leading-relaxed">
+                Explore our signature cocktails — from timeless classics to 
+                innovative creations inspired by the city.
+              </p>
+              <Button
+                onClick={() => openPanel('menu')}
+                size="lg"
+                className="bg-gold-400 hover:bg-gold-300 text-ink-900 text-lg px-8 py-6 rounded-full font-semibold"
+              >
+                Open
+              </Button>
+            </div>
+            <div className="relative h-[400px] rounded-lg overflow-hidden">
+              <img 
+                src="/src/assets/gallery-3.jpg" 
+                alt="Cocktail menu preview"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Reservation Intro Section */}
+      <section id="reservation-intro" className="snap-section min-h-screen bg-ink-700 flex items-center justify-center">
+        <div className="section-content container mx-auto px-6 py-20 max-w-6xl">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="relative h-[400px] rounded-lg overflow-hidden order-2 md:order-1">
+              <img 
+                src="/src/assets/gallery-5.jpg" 
+                alt="Reservation"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="space-y-6 order-1 md:order-2">
+              <h2 className="text-5xl md:text-6xl font-display text-mist-100">
+                Reservation
+              </h2>
+              <p className="text-xl text-mist-300 leading-relaxed">
+                Reserve your table and join us for an unforgettable experience 
+                at Simona.
+              </p>
+              <Button
+                onClick={openReservation}
+                size="lg"
+                className="bg-gold-400 hover:bg-gold-300 text-ink-900 text-lg px-8 py-6 rounded-full font-semibold"
+              >
+                Open
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-ink-900 border-t border-border py-16">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <div className="grid md:grid-cols-3 gap-12">
+            <div className="space-y-4">
+              <h3 className="text-2xl font-display text-mist-100">Address</h3>
+              <p className="text-mist-300 leading-relaxed">
+                📄 DOCX Footer Content Placeholder
+              </p>
+              <p className="text-mist-300 text-sm">
+                Address and location information will be imported from the DOCX file.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-2xl font-display text-mist-100">Hours</h3>
+              <p className="text-mist-300 leading-relaxed">
+                📄 DOCX Footer Content Placeholder
+              </p>
+              <p className="text-mist-300 text-sm">
+                Hours and schedule will be imported from the DOCX file.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <h3 className="text-2xl font-display text-mist-100">Contact</h3>
+              <p className="text-mist-300 leading-relaxed">
+                📄 DOCX Footer Content Placeholder
+              </p>
+              <p className="text-mist-300 text-sm">
+                Contact information and socials will be imported from the DOCX file.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-12 pt-8 border-t border-border text-center">
+            <p className="text-mist-300 text-sm">
+              © {new Date().getFullYear()} Simona. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
+
       {/* Panels */}
       <FullScreenPanel
         isOpen={activePanel === 'about'}
