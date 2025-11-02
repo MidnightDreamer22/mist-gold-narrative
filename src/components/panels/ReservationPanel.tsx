@@ -173,7 +173,7 @@ const ReservationPanel = () => {
         <div className="grid lg:grid-cols-12 gap-8 mb-8">
           {/* LEFT: Details Form */}
           <div className="lg:col-span-5">
-            <form onSubmit={handleSubmit} className="bg-ink-700 rounded-lg border border-border p-8 space-y-6">
+            <form onSubmit={handleSubmit} className="bg-ink-700 rounded-lg border border-border p-8 space-y-6" style={{ backgroundColor: 'hsl(var(--ink-700))' }}>
               <div className="space-y-6">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-mist-100">Name *</Label>
