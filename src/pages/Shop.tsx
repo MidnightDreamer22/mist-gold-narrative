@@ -15,7 +15,13 @@ export default function Shop() {
     const fetchProducts = async () => {
       try {
         const data = await storefrontApiRequest(STOREFRONT_QUERY, { first: 20 });
-        setProducts(data.data.products.edges);
+        const sortedProducts = [...data.data.products.edges].sort((a, b) => {
+          const order = ['Simona Pin', 'Tumbler Glass', 'Highball Glass', 'Simona\'s Jacket'];
+          const indexA = order.findIndex(name => a.node.title.includes(name));
+          const indexB = order.findIndex(name => b.node.title.includes(name));
+          return (indexA === -1 ? 999 : indexA) - (indexB === -1 ? 999 : indexB);
+        });
+        setProducts(sortedProducts);
       } catch (error) {
         console.error('Error fetching products:', error);
       } finally {
