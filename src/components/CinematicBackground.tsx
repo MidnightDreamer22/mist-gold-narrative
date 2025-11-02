@@ -21,29 +21,34 @@ const CinematicBackground = () => {
 
   return (
     <div className="fixed inset-0 z-0 overflow-hidden" style={{ pointerEvents: 'none' }}>
-      {/* Poster Image */}
+      {/* Poster Image - Always visible until video loads */}
       <div
-        className="absolute inset-0 bg-cover bg-center transition-opacity duration-300"
+        className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage: `url(${heroPoster})`,
           opacity: videoLoaded && !prefersReducedMotion ? 0 : 1,
+          transition: 'opacity 280ms cubic-bezier(.16,1,.3,1)',
+          visibility: videoLoaded && !prefersReducedMotion ? 'hidden' : 'visible'
         }}
       />
 
-      {/* Video Layer */}
+      {/* Video Layer - Hidden until loaded */}
       {!prefersReducedMotion && (
         <video
           autoPlay
           muted
           loop
           playsInline
-          preload="metadata"
-          onCanPlay={handleVideoLoad}
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[240ms]"
+          preload="auto"
+          poster={heroPoster}
+          onLoadedData={handleVideoLoad}
+          className="heroAnim absolute inset-0 w-full h-full object-cover"
           style={{
             opacity: videoLoaded ? 1 : 0,
+            visibility: videoLoaded ? 'visible' : 'hidden',
+            transition: 'opacity 280ms cubic-bezier(.16,1,.3,1)',
             transform: 'translateZ(0)',
-            willChange: 'transform'
+            willChange: 'opacity'
           }}
         >
           <source src={heroVideo} type="video/mp4" />

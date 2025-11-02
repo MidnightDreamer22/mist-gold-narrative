@@ -1,8 +1,15 @@
 import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { useState, useEffect } from 'react';
 import ReservationPanel from '@/components/panels/ReservationPanel';
 
 const IntroReserve = () => {
   useScrollReveal();
+  const [isClient, setIsClient] = useState(false);
+
+  // Ensure client-side hydration
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
     <main className="min-h-screen pt-20">
@@ -41,7 +48,7 @@ const IntroReserve = () => {
       </section>
 
       {/* Section 2: Reservation Module */}
-      <ReservationPanel />
+      {isClient && <ReservationPanel />}
     </main>
   );
 };

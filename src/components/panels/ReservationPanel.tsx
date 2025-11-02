@@ -294,7 +294,7 @@ const ReservationPanel = () => {
             </form>
           </div>
 
-          {/* RIGHT: Availability Table */}
+          {/* RIGHT: Map + Info */}
           <div className="lg:col-span-7">
             <div className="lg:sticky lg:top-24 space-y-4">
               {/* Inline Info Block - "Before you book" */}
@@ -361,56 +361,27 @@ const ReservationPanel = () => {
                 </div>
               </div>
 
-              {/* Availability Table */}
-              {date && formData.partySize ? (
-                <div className="bg-ink-700 rounded-lg border border-border p-6 space-y-4">
-                  <div>
-                    <h3 className="text-2xl font-display text-mist-100">Available Times</h3>
-                    <p className="text-sm text-mist-300 mt-2">
-                      {format(date, 'MMMM d, yyyy')} • {formData.partySize} {parseInt(formData.partySize) === 1 ? 'guest' : 'guests'}
-                    </p>
-                  </div>
-                  
-                  <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
-                    {availableSlots.map((slot, index) => (
-                      <button
-                        key={slot.time}
-                        type="button"
-                        disabled={!slot.available}
-                        onClick={() => setFormData({...formData, time: slot.time})}
-                        className={cn(
-                          "p-3 rounded border transition-all text-center",
-                          "opacity-0 animate-fade-in",
-                          slot.time === formData.time && "bg-gold-400 text-ink-900 border-gold-400 shadow-lg",
-                          slot.available && slot.time !== formData.time && "border-border hover:border-gold-400 hover:bg-ink-600 text-mist-300",
-                          !slot.available && "opacity-40 cursor-not-allowed text-mist-500 line-through"
-                        )}
-                        style={{
-                          animationDelay: `${index * 60}ms`,
-                          animationDuration: '240ms',
-                          animationFillMode: 'forwards'
-                        }}
-                      >
-                        <div className="text-base font-medium">{slot.time}</div>
-                        {!slot.available && <div className="text-xs mt-1">Full</div>}
-                      </button>
-                    ))}
-                  </div>
-
-                  {availableSlots.length === 0 && (
-                    <p className="text-center text-mist-400 py-8">
-                      No available times for this date. Please choose another date.
-                    </p>
-                  )}
+              {/* Google Map */}
+              <div 
+                className="bg-ink-700 rounded-lg border border-border overflow-hidden"
+                style={{
+                  opacity: 0,
+                  transform: 'translateY(10px)',
+                  animation: 'fadeSlideUp 480ms var(--easing-enter) forwards',
+                  animationDelay: '200ms'
+                }}
+              >
+                <div className="mapWrap">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3048.1342097073843!2d44.505157976628645!3d40.183826569780805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x406abcfc6ab3a6c7%3A0xf953c923afb8efca!2sSimona!5e0!3m2!1sen!2sam!4v1762090593594!5m2!1sen!2sam"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Simona Location"
+                  />
                 </div>
-              ) : (
-                <div className="bg-ink-700 rounded-lg border border-border p-12 text-center">
-                  <CalendarIcon className="mx-auto h-16 w-16 text-mist-500 mb-4" />
-                  <p className="text-mist-300 text-lg">
-                    Select date & party size to view availability
-                  </p>
-                </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
@@ -438,6 +409,20 @@ const ReservationPanel = () => {
             opacity: 1;
             max-height: 600px;
           }
+        }
+        
+        .mapWrap {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 16 / 9;
+        }
+        
+        .mapWrap iframe {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          border: 0;
         }
       `}</style>
     </section>
