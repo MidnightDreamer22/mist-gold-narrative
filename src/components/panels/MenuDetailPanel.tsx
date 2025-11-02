@@ -99,10 +99,15 @@ const MenuDetailPanel = ({ categoryId, categoryTitle, onBack }: MenuDetailPanelP
   if (error) {
     return (
       <div className="min-h-screen bg-ink-900 flex items-center justify-center px-6">
-        <div className="text-center max-w-md">
+        <div 
+          className="text-center max-w-md"
+          style={{
+            animation: 'fadeIn 240ms var(--easing-enter) forwards'
+          }}
+        >
           <p className="text-destructive text-lg mb-4">{error}</p>
-          <div className="space-y-4">
-            <Button onClick={fetchDrinks} variant="outline" className="mr-2">
+          <div className="flex gap-2 justify-center mb-8">
+            <Button onClick={fetchDrinks} variant="outline">
               Retry
             </Button>
             <Button onClick={onBack} variant="ghost">
@@ -148,9 +153,10 @@ const MenuDetailPanel = ({ categoryId, categoryTitle, onBack }: MenuDetailPanelP
               <div
                 key={index}
                 className="border-b border-border pb-8 last:border-0"
+                data-motion
                 style={{
-                  animation: `fadeInUp 480ms cubic-bezier(.16,1,.3,1) forwards`,
-                  animationDelay: `${index * 40}ms`,
+                  animation: `fadeInUp var(--timing-enter) var(--easing-enter) forwards`,
+                  animationDelay: `${Math.min(index * 60, 280)}ms`,
                   opacity: 0
                 }}
               >
@@ -160,7 +166,11 @@ const MenuDetailPanel = ({ categoryId, categoryTitle, onBack }: MenuDetailPanelP
                       <img
                         src={drink.image_url}
                         alt={drink.drink_name}
-                        className="w-full h-full object-cover rounded"
+                        className="w-full h-full object-cover rounded transition-opacity duration-200"
+                        style={{ opacity: 0 }}
+                        onLoad={(e) => {
+                          (e.target as HTMLImageElement).style.opacity = '1';
+                        }}
                         loading="lazy"
                       />
                     </div>
@@ -206,11 +216,20 @@ const MenuDetailPanel = ({ categoryId, categoryTitle, onBack }: MenuDetailPanelP
         @keyframes fadeInUp {
           from {
             opacity: 0;
-            transform: translateY(16px);
+            transform: translateY(12px);
           }
           to {
             opacity: 1;
             transform: translateY(0);
+          }
+        }
+        
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
           }
         }
       `}</style>

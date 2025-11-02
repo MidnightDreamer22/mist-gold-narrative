@@ -41,8 +41,9 @@ const GalleryPanel = () => {
                 key={index}
                 onClick={() => openLightbox(index)}
                 className="relative aspect-[4/3] overflow-hidden rounded group focus:outline-none focus:ring-2 focus:ring-gold-400"
+                data-motion
                 style={{
-                  animation: `fadeInScale 600ms cubic-bezier(.16,1,.3,1) forwards`,
+                  animation: `fadeInScale 240ms var(--easing-enter) forwards`,
                   animationDelay: `${index * 60}ms`,
                   opacity: 0
                 }}
@@ -105,11 +106,11 @@ const GalleryPanel = () => {
         @keyframes fadeInScale {
           from {
             opacity: 0;
-            transform: scale(0.98);
+            transform: translateY(8px);
           }
           to {
             opacity: 1;
-            transform: scale(1);
+            transform: translateY(0);
           }
         }
       `}</style>

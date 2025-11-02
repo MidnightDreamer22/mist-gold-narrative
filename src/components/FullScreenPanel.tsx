@@ -1,5 +1,5 @@
 import { X } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface FullScreenPanelProps {
   isOpen: boolean;
@@ -9,9 +9,15 @@ interface FullScreenPanelProps {
 }
 
 const FullScreenPanel = ({ isOpen, onClose, title, children }: FullScreenPanelProps) => {
+  const previousActiveElement = useRef<HTMLElement | null>(null);
+
   useEffect(() => {
     if (isOpen) {
+      // Save currently focused element
+      previousActiveElement.current = document.activeElement as HTMLElement;
+      
       document.body.style.overflow = 'hidden';
+      document.body.setAttribute('data-panel-active', 'true');
       
       const handleEscape = (e: KeyboardEvent) => {
         if (e.key === 'Escape') onClose();
@@ -20,7 +26,13 @@ const FullScreenPanel = ({ isOpen, onClose, title, children }: FullScreenPanelPr
       
       return () => {
         document.body.style.overflow = '';
+        document.body.removeAttribute('data-panel-active');
         window.removeEventListener('keydown', handleEscape);
+        
+        // Restore focus to triggering element
+        if (previousActiveElement.current) {
+          previousActiveElement.current.focus();
+        }
       };
     }
   }, [isOpen, onClose]);
@@ -28,12 +40,23 @@ const FullScreenPanel = ({ isOpen, onClose, title, children }: FullScreenPanelPr
   if (!isOpen) return null;
 
   return (
-    <div 
-      className="fixed inset-0 z-50 bg-ink-900"
-      style={{
-        animation: 'panelEnter 600ms cubic-bezier(.16,1,.3,1) forwards'
-      }}
-    >
+    <>
+      {/* Scrim */}
+      <div 
+        className="fixed inset-0 z-40 bg-ink-900/60 backdrop-blur-sm"
+        style={{
+          animation: 'scrimEnter 150ms ease-out forwards'
+        }}
+        onClick={onClose}
+      />
+      
+      {/* Panel */}
+      <div 
+        className="fixed inset-0 z-50 bg-ink-900"
+        style={{
+          animation: 'panelEnter var(--timing-enter) var(--easing-enter) forwards'
+        }}
+      >
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-10 bg-ink-900/80 backdrop-blur-frost border-b border-border">
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
@@ -64,16 +87,26 @@ const FullScreenPanel = ({ isOpen, onClose, title, children }: FullScreenPanelPr
       <style>{`
         @keyframes panelEnter {
           from {
-            opacity: 0.96;
-            transform: translateY(-24px);
+            opacity: 0;
+            transform: translateY(12px);
           }
           to {
             opacity: 1;
             transform: translateY(0);
           }
         }
+        
+        @keyframes scrimEnter {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
       `}</style>
     </div>
+    </>
   );
 };
 

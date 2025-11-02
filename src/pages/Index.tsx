@@ -7,13 +7,14 @@ import GalleryPanel from '@/components/panels/GalleryPanel';
 import MenuPanel from '@/components/panels/MenuPanel';
 import MenuDetailPanel from '@/components/panels/MenuDetailPanel';
 import ReservationPanel from '@/components/panels/ReservationPanel';
-import heroVideo from '@/assets/hero-video.mp4';
+import { useFooterReveal } from '@/hooks/useFooterReveal';
 import heroPoster from '@/assets/hero-video-poster.jpg';
 
 const Index = () => {
   const [showCTA, setShowCTA] = useState(false);
   const [activePanel, setActivePanel] = useState<string | null>(null);
   const [selectedMenuCategory, setSelectedMenuCategory] = useState<string | null>(null);
+  const { footerRef, isVisible: footerVisible } = useFooterReveal();
 
   useEffect(() => {
     // Show CTA after hero animation completes
@@ -68,21 +69,7 @@ const Index = () => {
     <>
       <div className="min-h-screen">
         {/* Hero Section */}
-        <section id="hero" className="snap-section relative min-h-screen flex items-center justify-center overflow-hidden">
-          {/* Background Video */}
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster={heroPoster}
-            className="absolute inset-0 w-full h-full object-cover"
-          >
-            <source src={heroVideo} type="video/mp4" />
-          </video>
-
-          {/* Dark Overlay */}
-          <div className="absolute inset-0 bg-ink-900/40" />
+        <section id="hero" className="snap-section relative min-h-screen flex items-center justify-center overflow-hidden z-10">
 
           {/* Content */}
           <div className="relative z-10 text-center px-6">
@@ -165,13 +152,33 @@ const Index = () => {
                 transform: translateX(-50%) translateY(-10px);
               }
             }
+            
+            @keyframes sectionEnter {
+              from {
+                opacity: 0.96;
+                transform: translateY(-18px);
+              }
+              to {
+                opacity: 1;
+                transform: translateY(0);
+              }
+            }
           `}</style>
         </section>
       </div>
 
       {/* About Intro Section */}
-      <section id="about-intro" className="snap-section min-h-screen bg-ink-900 flex items-center justify-center">
-        <div className="section-content container mx-auto px-6 py-20 max-w-6xl">
+      <section id="about-intro" className="snap-section min-h-screen relative z-10 flex items-center justify-center">
+        <div 
+          className="section-content container mx-auto px-6 py-20 max-w-6xl"
+          data-motion
+          style={{
+            opacity: 0.96,
+            transform: 'translateY(-18px)',
+            animation: 'sectionEnter 560ms var(--easing-enter) forwards',
+            animationDelay: '100ms'
+          }}
+        >
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <h2 className="text-5xl md:text-6xl font-display text-mist-100">
@@ -201,8 +208,17 @@ const Index = () => {
       </section>
 
       {/* Gallery Intro Section */}
-      <section id="gallery-intro" className="snap-section min-h-screen bg-ink-700 flex items-center justify-center">
-        <div className="section-content container mx-auto px-6 py-20 max-w-6xl">
+      <section id="gallery-intro" className="snap-section min-h-screen relative z-10 flex items-center justify-center">
+        <div 
+          className="section-content container mx-auto px-6 py-20 max-w-6xl"
+          data-motion
+          style={{
+            opacity: 0.96,
+            transform: 'translateY(-18px)',
+            animation: 'sectionEnter 560ms var(--easing-enter) forwards',
+            animationDelay: '100ms'
+          }}
+        >
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="relative h-[400px] rounded-lg overflow-hidden order-2 md:order-1">
               <img 
@@ -232,8 +248,17 @@ const Index = () => {
       </section>
 
       {/* Menu Intro Section */}
-      <section id="menu-intro" className="snap-section min-h-screen bg-ink-900 flex items-center justify-center">
-        <div className="section-content container mx-auto px-6 py-20 max-w-6xl">
+      <section id="menu-intro" className="snap-section min-h-screen relative z-10 flex items-center justify-center">
+        <div 
+          className="section-content container mx-auto px-6 py-20 max-w-6xl"
+          data-motion
+          style={{
+            opacity: 0.96,
+            transform: 'translateY(-18px)',
+            animation: 'sectionEnter 560ms var(--easing-enter) forwards',
+            animationDelay: '100ms'
+          }}
+        >
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <h2 className="text-5xl md:text-6xl font-display text-mist-100">
@@ -263,8 +288,17 @@ const Index = () => {
       </section>
 
       {/* Reservation Intro Section */}
-      <section id="reservation-intro" className="snap-section min-h-screen bg-ink-700 flex items-center justify-center">
-        <div className="section-content container mx-auto px-6 py-20 max-w-6xl">
+      <section id="reservation-intro" className="snap-section min-h-screen relative z-10 flex items-center justify-center">
+        <div 
+          className="section-content container mx-auto px-6 py-20 max-w-6xl"
+          data-motion
+          style={{
+            opacity: 0.96,
+            transform: 'translateY(-18px)',
+            animation: 'sectionEnter 560ms var(--easing-enter) forwards',
+            animationDelay: '100ms'
+          }}
+        >
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="relative h-[400px] rounded-lg overflow-hidden order-2 md:order-1">
               <img 
@@ -294,7 +328,16 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-ink-900 border-t border-border py-16">
+      <footer 
+        ref={footerRef}
+        className="relative z-10 border-t border-border py-16 transition-all"
+        style={{
+          minHeight: '400px',
+          opacity: footerVisible ? 1 : 0,
+          transform: footerVisible ? 'translateY(0)' : 'translateY(10px)',
+          transition: 'opacity 480ms var(--easing-enter), transform 480ms var(--easing-enter)'
+        }}
+      >
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid md:grid-cols-3 gap-12">
             <div className="space-y-4">
