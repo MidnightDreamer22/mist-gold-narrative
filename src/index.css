@@ -78,7 +78,33 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  }
+  
+  html {
     scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+  }
+  
+  .snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    min-height: 100vh;
+  }
+  
+  /* Dropdown transition effect */
+  .section-content {
+    animation: dropdown 700ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  @keyframes dropdown {
+    from {
+      opacity: 0;
+      transform: translateY(-24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
   
   h1, h2, h3, h4, h5, h6 {
