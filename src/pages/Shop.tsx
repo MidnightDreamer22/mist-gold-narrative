@@ -57,9 +57,8 @@ export default function Shop() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent" />
-        <div className="relative max-w-7xl mx-auto text-center">
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">The Simona Collection</h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
             Carry the rhythm of Yerevan with you. Curated pieces for those who live creatively.
