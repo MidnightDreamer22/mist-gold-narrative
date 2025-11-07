@@ -146,49 +146,50 @@ const DiveInModal = ({
                   </div>
                   <h3 className="text-2xl font-display text-mist-100 mb-6">Choose Your Path</h3>
 
-                  <div className="grid md:grid-cols-3 gap-4">
-                    {/* Option 1: Website Form */}
-                    <button onClick={() => setExpandedOption(expandedOption === 'form' ? null : 'form')} className={cn("p-6 rounded-lg border-2 transition-all text-left", expandedOption === 'form' ? "border-gold-400 bg-ink-700/50" : "border-border hover:border-gold-400/50 bg-ink-700 !bg-opacity-100")}>
-                      <Calendar className="w-8 h-8 text-gold-400 mb-3" />
-                      <h4 className="text-lg font-display text-mist-100 mb-2">Website Form</h4>
-                      <p className="text-sm text-mist-300">Fill out the form below</p>
-                      <p className="text-xs text-gold-400 mt-2">Confirmation within 1 hour</p>
-                    </button>
+                  <div className="space-y-4">
+                    <div className="grid md:grid-cols-3 gap-4">
+                      {/* Option 1: Website Form */}
+                      <button onClick={() => setExpandedOption(expandedOption === 'form' ? null : 'form')} className={cn("p-6 rounded-lg border-2 transition-all text-left", expandedOption === 'form' ? "border-gold-400 bg-ink-700/50" : "border-border hover:border-gold-400/50 bg-ink-700 !bg-opacity-100")}>
+                        <Calendar className="w-8 h-8 text-gold-400 mb-3" />
+                        <h4 className="text-lg font-display text-mist-100 mb-2">Website Form</h4>
+                        <p className="text-sm text-mist-300">Fill out the form below</p>
+                        <p className="text-xs text-gold-400 mt-2">Confirmation within 1 hour</p>
+                      </button>
 
-                    {/* Option 2: Social Media */}
-                    <div className="p-6 rounded-lg border-2 border-border bg-ink-700 !bg-opacity-100 hover:border-gold-400/50 transition-all">
-                      <div className="flex gap-2 mb-3">
-                        <Instagram className="w-6 h-6 text-gold-400" />
-                        <Facebook className="w-6 h-6 text-gold-400" />
+                      {/* Option 2: Social Media */}
+                      <div className="p-6 rounded-lg border-2 border-border bg-ink-700 !bg-opacity-100 hover:border-gold-400/50 transition-all">
+                        <div className="flex gap-2 mb-3">
+                          <Instagram className="w-6 h-6 text-gold-400" />
+                          <Facebook className="w-6 h-6 text-gold-400" />
+                        </div>
+                        <h4 className="text-lg font-display text-mist-100 mb-2">Social Media</h4>
+                        <p className="text-sm text-mist-300 mb-3">Prefer to message us?</p>
+                        <div className="flex gap-2">
+                          <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-xs text-gold-400 hover:underline">
+                            Instagram
+                          </a>
+                          <span className="text-mist-500">•</span>
+                          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-xs text-gold-400 hover:underline">
+                            Facebook
+                          </a>
+                        </div>
+                        <p className="text-xs text-gold-400 mt-2"> Confirmation within 1 hour</p>
                       </div>
-                      <h4 className="text-lg font-display text-mist-100 mb-2">Social Media</h4>
-                      <p className="text-sm text-mist-300 mb-3">Prefer to message us?</p>
-                      <div className="flex gap-2">
-                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-xs text-gold-400 hover:underline">
-                          Instagram
+
+                      {/* Option 3: Phone */}
+                      <div className="p-6 rounded-lg border-2 border-border bg-ink-700 !bg-opacity-100 hover:border-gold-400/50 transition-all">
+                        <Phone className="w-8 h-8 text-gold-400 mb-3" />
+                        <h4 className="text-lg font-display text-mist-100 mb-2">Urgent Phone</h4>
+                        <p className="text-sm text-mist-300 mb-3">Need immediate assistance?</p>
+                        <a href="tel:+37495426619" className="text-gold-400 hover:underline font-semibold">
+                          +374 95 426 619
                         </a>
-                        <span className="text-mist-500">•</span>
-                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-xs text-gold-400 hover:underline">
-                          Facebook
-                        </a>
+                        <p className="text-xs text-gold-400 mt-2">Available 14:00-22:00 daily</p>
                       </div>
-                      <p className="text-xs text-gold-400 mt-2"> Confirmation within 1 hour</p>
                     </div>
 
-                    {/* Option 3: Phone */}
-                    <div className="p-6 rounded-lg border-2 border-border bg-ink-700 !bg-opacity-100 hover:border-gold-400/50 transition-all">
-                      <Phone className="w-8 h-8 text-gold-400 mb-3" />
-                      <h4 className="text-lg font-display text-mist-100 mb-2">Urgent Phone</h4>
-                      <p className="text-sm text-mist-300 mb-3">Need immediate assistance?</p>
-                      <a href="tel:+37495426619" className="text-gold-400 hover:underline font-semibold">
-                        +374 95 426 619
-                      </a>
-                      <p className="text-xs text-gold-400 mt-2">Available 14:00-22:00 daily</p>
-                    </div>
-                  </div>
-
-                  {/* Expanded Form */}
-                  {expandedOption === 'form' && <form onSubmit={handleSubmit} className="mt-6 p-6 bg-ink-700 !bg-opacity-100 rounded-lg border border-gold-400/30 space-y-4">
+                    {/* Expanded Form */}
+                    {expandedOption === 'form' && <form onSubmit={handleSubmit} className="p-6 bg-ink-700 !bg-opacity-100 rounded-lg border border-gold-400/30 space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <Label htmlFor="name" className="text-mist-100">Full Name *</Label>
@@ -290,6 +291,7 @@ const DiveInModal = ({
                         Request Reservation
                       </Button>
                     </form>}
+                  </div>
                 </section>
 
                 {/* Divider */}
