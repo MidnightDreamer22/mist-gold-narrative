@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation";
 import CinematicBackground from "./components/CinematicBackground";
 import Index from "./pages/Index";
 import IntroReserve from "./pages/IntroReserve";
+import History from "./pages/History";
 import Shop from "./pages/Shop";
 import Product from "./pages/Product";
 import NotFound from "./pages/NotFound";
@@ -15,7 +16,7 @@ const queryClient = new QueryClient();
 
 const AppContent = ({ handleNavigate }: { handleNavigate: (panel: string) => void }) => {
   const location = useLocation();
-  const hideBackground = location.pathname.startsWith('/shop') || location.pathname.startsWith('/product');
+  const hideBackground = location.pathname.startsWith('/shop') || location.pathname.startsWith('/product') || location.pathname === '/history';
 
   return (
     <>
@@ -31,6 +32,7 @@ const AppContent = ({ handleNavigate }: { handleNavigate: (panel: string) => voi
         <Route path="/" element={<Index />} />
         <Route path="/intro-reserve" element={<IntroReserve />} />
         <Route path="/dive-in" element={<IntroReserve />} />
+        <Route path="/history" element={<History />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/product/:handle" element={<Product />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

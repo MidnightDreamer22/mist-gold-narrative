@@ -22,8 +22,7 @@ const Navigation = ({ onNavigate }: NavigationProps) => {
   }, []);
 
   const navLinks = [
-    { id: 'about', label: 'About', type: 'panel' },
-    { id: 'gallery', label: 'Gallery', type: 'panel' },
+    { id: 'history', label: 'History', type: 'route', path: '/history' },
     { id: 'menu', label: 'Menu', type: 'panel' },
     { id: 'reservation', label: 'Reservation', type: 'panel' },
     { id: 'shop', label: 'Shop', type: 'route', path: '/shop' },
