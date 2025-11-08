@@ -223,7 +223,6 @@ const DiveInModal = ({ isOpen, onClose }: DiveInModalProps) => {
                         <p className="text-sm text-mist-300">Fill out the form below</p>
                         <p className="text-xs text-gold-400 mt-2">Confirmation within 1 hour</p>
                       </button>
-
                       {/* Option 2: Social Media */}
                       <div className="p-6 rounded-lg border-2 border-border bg-ink-700 !bg-opacity-100 hover:border-gold-400/50 transition-all">
                         <div className="flex gap-2 mb-3">
@@ -253,7 +252,6 @@ const DiveInModal = ({ isOpen, onClose }: DiveInModalProps) => {
                         </div>
                         <p className="text-xs text-gold-400 mt-2"> Confirmation within 1 hour</p>
                       </div>
-
                       {/* Option 3: Phone */}
                       <div className="p-6 rounded-lg border-2 border-border bg-ink-700 !bg-opacity-100 hover:border-gold-400/50 transition-all">
                         <Phone className="w-8 h-8 text-gold-400 mb-3" />
@@ -264,12 +262,12 @@ const DiveInModal = ({ isOpen, onClose }: DiveInModalProps) => {
                         </a>
                         <p className="text-xs text-gold-400 mt-2">Available 14:00-22:00 daily</p>
                       </div>
+                      ref={formRef}
                     </div>
 
                     {/* Expanded Form */}
                     {expandedOption === "form" && (
                       <form
-                        ref={formRef}
                         onSubmit={handleSubmit}
                         className="p-6 bg-ink-700 !bg-opacity-100 rounded-lg border border-gold-400/30 space-y-4"
                       >
