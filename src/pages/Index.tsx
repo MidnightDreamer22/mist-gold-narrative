@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
 import FullScreenPanel from '@/components/FullScreenPanel';
 import AboutPanel from '@/components/panels/AboutPanel';
-import GalleryPanel from '@/components/panels/GalleryPanel';
 import MenuPanel from '@/components/panels/MenuPanel';
 import MenuDetailPanel from '@/components/panels/MenuDetailPanel';
 import ReservationPanel from '@/components/panels/ReservationPanel';
@@ -211,46 +210,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Gallery Intro Section */}
-      <section id="gallery-intro" className="snap-section min-h-screen relative z-10 flex items-center justify-center">
-        <div 
-          className="section-content container mx-auto px-6 py-20 max-w-6xl"
-          data-motion
-          style={{
-            opacity: 0.96,
-            transform: 'translateY(-18px)',
-            animation: 'sectionEnter 560ms var(--easing-enter) forwards',
-            animationDelay: '100ms'
-          }}
-        >
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="relative h-[400px] rounded-lg overflow-hidden order-2 md:order-1">
-              <img 
-                src="/src/assets/gallery-1.jpg" 
-                alt="Gallery preview"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="space-y-6 order-1 md:order-2">
-              <h2 className="text-5xl md:text-6xl font-display text-mist-100">
-                Gallery
-              </h2>
-              <p className="text-xl text-mist-300 leading-relaxed">
-                Step into our world through a curated collection of moments, 
-                ambiance, and artistry.
-              </p>
-              <Button
-                onClick={() => openPanel('gallery')}
-                size="lg"
-                className="bg-gold-400 hover:bg-gold-300 text-ink-900 text-lg px-8 py-6 rounded-full font-semibold"
-              >
-                Open
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Menu Intro Section */}
       <section id="menu-intro" className="snap-section min-h-screen relative z-10 flex items-center justify-center">
         <div 
@@ -429,14 +388,6 @@ const Index = () => {
         title="About Simona"
       >
         <AboutPanel />
-      </FullScreenPanel>
-
-      <FullScreenPanel
-        isOpen={activePanel === 'gallery'}
-        onClose={closePanel}
-        title="Gallery"
-      >
-        <GalleryPanel />
       </FullScreenPanel>
 
       <FullScreenPanel
