@@ -262,7 +262,6 @@ const DiveInModal = ({ isOpen, onClose }: DiveInModalProps) => {
                         </a>
                         <p className="text-xs text-gold-400 mt-2">Available 14:00-22:00 daily</p>
                       </div>
-                      ref={formRef}
                     </div>
 
                     {/* Expanded Form */}
@@ -271,7 +270,7 @@ const DiveInModal = ({ isOpen, onClose }: DiveInModalProps) => {
                         onSubmit={handleSubmit}
                         className="p-6 bg-ink-700 !bg-opacity-100 rounded-lg border border-gold-400/30 space-y-4"
                       >
-                        <div className="grid md:grid-cols-2 gap-4">
+                        <div ref={formRef} className="grid md:grid-cols-2 gap-4">
                           <div className="space-y-2">
                             <Label htmlFor="name" className="text-mist-100">
                               Full Name *
