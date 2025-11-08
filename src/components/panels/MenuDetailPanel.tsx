@@ -50,18 +50,23 @@ const MenuDetailPanel = ({ categoryId, categoryTitle, onBack }: MenuDetailPanelP
       }
 
       // Parse rows (skip header)
-      // Data structure: Name, Description, Price
-      const headers = rows[0];
-      const drinkData = rows.slice(1).map((row: string[]) => ({
-        drink_name: row[0] || '',
-        short_desc: row[1] || '',
-        price: row[2] || '',
-        category: '',
-        ingredients: '',
-        abv: '',
-        image_url: '',
-        is_featured: false
-      }));
+      // Sheet structure: Column 0 = Cocktail Name, Column 5 = Price, Column 6 = Description
+      const drinkData = rows
+        .slice(1) // Skip header row
+        .filter((row: string[]) => {
+          // Only include rows with a cocktail name (column 0) and filter out empty/incomplete rows
+          return row[0] && row[0].trim() !== '' && row[6] && row[5];
+        })
+        .map((row: string[]) => ({
+          drink_name: row[0].trim(),
+          short_desc: row[6].trim(), // Description is in column 6
+          price: row[5].trim(), // Price is in column 5
+          category: '',
+          ingredients: '',
+          abv: '',
+          image_url: '',
+          is_featured: false
+        }));
 
       setDrinks(drinkData);
     } catch (err) {
@@ -163,33 +168,21 @@ const MenuDetailPanel = ({ categoryId, categoryTitle, onBack }: MenuDetailPanelP
                   )}
                   
                   <div className="flex-1">
-                    <div className="flex items-start justify-between gap-4 mb-2">
-                      <h3 className="text-2xl font-display text-mist-100">
+                    <div className="flex items-start justify-between gap-4 mb-3">
+                      <h3 className="text-3xl font-display text-mist-100 font-bold">
                         {drink.drink_name}
-                        {drink.is_featured && (
-                          <span className="ml-2 text-sm text-gold-400">★ Featured</span>
-                        )}
                       </h3>
-                      <span className="text-xl text-gold-400 font-semibold whitespace-nowrap">
-                        ${drink.price}
-                      </span>
                     </div>
                     
-                    {drink.short_desc && (
-                      <p className="text-mist-300 mb-3">{drink.short_desc}</p>
-                    )}
+                    <p className="text-mist-300 mb-4 leading-relaxed">
+                      {drink.short_desc}
+                    </p>
                     
-                    {drink.ingredients && (
-                      <p className="text-sm text-mist-300/70 italic">
-                        {drink.ingredients}
-                      </p>
-                    )}
-                    
-                    {drink.abv && (
-                      <p className="text-sm text-mist-300/50 mt-2">
-                        ABV: {drink.abv}%
-                      </p>
-                    )}
+                    <div className="flex justify-end">
+                      <span className="text-2xl text-gold-400 font-semibold">
+                        {drink.price} AMD
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
