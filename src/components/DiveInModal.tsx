@@ -17,7 +17,7 @@ interface DiveInModalProps {
 }
 const DiveInModal = ({ isOpen, onClose }: DiveInModalProps) => {
   const { toast } = useToast();
-  const formRef = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
   const [expandedOption, setExpandedOption] = useState<"form" | "social" | "phone" | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [date, setDate] = useState<Date>();
@@ -269,11 +269,10 @@ const DiveInModal = ({ isOpen, onClose }: DiveInModalProps) => {
                     {/* Expanded Form */}
                     {expandedOption === "form" && (
                       <form
-                        ref={formRef}
                         onSubmit={handleSubmit}
                         className="p-6 bg-ink-700 !bg-opacity-100 rounded-lg border border-gold-400/30 space-y-4"
                       >
-                        <div className="grid md:grid-cols-2 gap-4">
+                        <div ref={formRef} className="grid md:grid-cols-2 gap-4">
                           <div className="space-y-2">
                             <Label htmlFor="name" className="text-mist-100">
                               Full Name *
