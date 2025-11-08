@@ -33,23 +33,8 @@ const MenuDetailPanel = ({ categoryId, categoryTitle, onBack }: MenuDetailPanelP
     setError(null);
 
     try {
-      // Get environment variables based on category
-      const sheetIds = {
-        classics: import.meta.env.VITE_SHEETS_DOC_ID_SIMONA_CLASSICS,
-        paloma: import.meta.env.VITE_SHEETS_DOC_ID_PALOMA_LIST,
-        spirit: import.meta.env.VITE_SHEETS_DOC_ID_SPIRIT_CITY
-      };
-
-      const apiKey = import.meta.env.VITE_SHEETS_API_KEY;
-      const sheetId = sheetIds[categoryId as keyof typeof sheetIds];
-
-      if (!apiKey || !sheetId) {
-        throw new Error('Google Sheets configuration missing. Please set VITE_SHEETS_API_KEY and sheet document IDs in your environment variables.');
-      }
-
-      // Fetch from Google Sheets API
-      const range = 'Sheet1!A:H'; // Adjust range as needed
-      const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${apiKey}`;
+      // Fetch from Google Sheets API with corrected endpoint
+      const url = 'https://sheets.googleapis.com/v4/spreadsheets/1R7sEBpCqVkWeZnxWXfG0S7CwCDVRMBI40F1N5pig4hQ/values/Ararat%20brandy%20menu?key=AIzaSyDBYUuK8aEDri_w8KYvEnWmWpm2geGHHMA';
       
       const response = await fetch(url);
       if (!response.ok) {
@@ -65,16 +50,17 @@ const MenuDetailPanel = ({ categoryId, categoryTitle, onBack }: MenuDetailPanelP
       }
 
       // Parse rows (skip header)
+      // Data structure: Name, Description, Price
       const headers = rows[0];
       const drinkData = rows.slice(1).map((row: string[]) => ({
-        category: row[0] || '',
-        drink_name: row[1] || '',
+        drink_name: row[0] || '',
+        short_desc: row[1] || '',
         price: row[2] || '',
-        short_desc: row[3] || '',
-        ingredients: row[4] || '',
-        abv: row[5] || '',
-        image_url: row[6] || '',
-        is_featured: row[7]?.toUpperCase() === 'TRUE'
+        category: '',
+        ingredients: '',
+        abv: '',
+        image_url: '',
+        is_featured: false
       }));
 
       setDrinks(drinkData);
