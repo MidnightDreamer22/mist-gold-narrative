@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { X, Calendar, Instagram, Facebook, Phone, Clock, Shirt, Volume2, AlertCircle, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -22,6 +22,7 @@ const DiveInModal = ({
   const {
     toast
   } = useToast();
+  const formRef = useRef<HTMLFormElement>(null);
   const [expandedOption, setExpandedOption] = useState<'form' | 'social' | 'phone' | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [date, setDate] = useState<Date>();
@@ -149,7 +150,12 @@ const DiveInModal = ({
                   <div className="space-y-4">
                     <div className="grid md:grid-cols-3 gap-4">
                       {/* Option 1: Website Form */}
-                      <button onClick={() => setExpandedOption(expandedOption === 'form' ? null : 'form')} className={cn("p-6 rounded-lg border-2 transition-all text-left", expandedOption === 'form' ? "border-gold-400 bg-ink-700/50" : "border-border hover:border-gold-400/50 bg-ink-700 !bg-opacity-100")}>
+                      <button onClick={() => {
+                        setExpandedOption(expandedOption === 'form' ? null : 'form');
+                        setTimeout(() => {
+                          formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }, 100);
+                      }} className={cn("p-6 rounded-lg border-2 transition-all text-left", expandedOption === 'form' ? "border-gold-400 bg-ink-700/50" : "border-border hover:border-gold-400/50 bg-ink-700 !bg-opacity-100")}>
                         <Calendar className="w-8 h-8 text-gold-400 mb-3" />
                         <h4 className="text-lg font-display text-mist-100 mb-2">Website Form</h4>
                         <p className="text-sm text-mist-300">Fill out the form below</p>
@@ -189,7 +195,7 @@ const DiveInModal = ({
                     </div>
 
                     {/* Expanded Form */}
-                    {expandedOption === 'form' && <form onSubmit={handleSubmit} className="p-6 bg-ink-700 !bg-opacity-100 rounded-lg border border-gold-400/30 space-y-4">
+                    {expandedOption === 'form' && <form ref={formRef} onSubmit={handleSubmit} className="p-6 bg-ink-700 !bg-opacity-100 rounded-lg border border-gold-400/30 space-y-4">
                       <div className="grid md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <Label htmlFor="name" className="text-mist-100">Full Name *</Label>
