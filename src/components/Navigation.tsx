@@ -3,11 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { CartDrawer } from './CartDrawer';
 
-interface NavigationProps {
-  onNavigate: (panel: string) => void;
-}
-
-const Navigation = ({ onNavigate }: NavigationProps) => {
+const Navigation = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -22,18 +18,11 @@ const Navigation = ({ onNavigate }: NavigationProps) => {
   }, []);
 
   const navLinks = [
-    { id: 'history', label: 'History', type: 'route', path: '/history' },
-    { id: 'menu', label: 'Menu', type: 'panel' },
-    { id: 'reservation', label: 'Reservation', type: 'panel' },
-    { id: 'shop', label: 'Shop', type: 'route', path: '/shop' },
+    { id: 'history', label: 'History', path: '/history' },
+    { id: 'menu', label: 'Menu', path: '/menu' },
+    { id: 'reservation', label: 'Reservation', path: '/reservation' },
+    { id: 'shop', label: 'Shop', path: '/shop' },
   ];
-
-  const handleNavClick = (link: any) => {
-    if (link.type === 'panel') {
-      onNavigate(link.id);
-    }
-    setMobileMenuOpen(false);
-  };
 
   return (
     <>
@@ -58,25 +47,14 @@ const Navigation = ({ onNavigate }: NavigationProps) => {
             {/* Desktop Navigation - Centered */}
             <div className="hidden md:flex items-center gap-8">
               {navLinks.map(link => (
-                link.type === 'route' ? (
-                  <Link
-                    key={link.id}
-                    to={link.path}
-                    className="text-sm font-sans tracking-wide link-underline text-mist-300 hover:text-gold-400 focus:outline-none focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:ring-offset-ink-900 rounded px-2 py-1"
-                    style={{ transition: 'all 480ms cubic-bezier(.16,1,.3,1)' }}
-                  >
-                    {link.label}
-                  </Link>
-                ) : (
-                  <button
-                    key={link.id}
-                    onClick={() => handleNavClick(link)}
-                    className="text-sm font-sans tracking-wide link-underline text-mist-300 hover:text-gold-400 focus:outline-none focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:ring-offset-ink-900 rounded px-2 py-1"
-                    style={{ transition: 'all 480ms cubic-bezier(.16,1,.3,1)' }}
-                  >
-                    {link.label}
-                  </button>
-                )
+                <Link
+                  key={link.id}
+                  to={link.path}
+                  className="text-sm font-sans tracking-wide link-underline text-mist-300 hover:text-gold-400 focus:outline-none focus:ring-2 focus:ring-gold-400 focus:ring-offset-2 focus:ring-offset-ink-900 rounded px-2 py-1"
+                  style={{ transition: 'all 480ms cubic-bezier(.16,1,.3,1)' }}
+                >
+                  {link.label}
+                </Link>
               ))}
             </div>
             
@@ -120,26 +98,15 @@ const Navigation = ({ onNavigate }: NavigationProps) => {
           <div className="absolute inset-0 bg-ink-900/98 backdrop-blur-frost" />
           <div className="relative flex flex-col items-center justify-center h-full gap-8">
             {navLinks.map(link => (
-              link.type === 'route' ? (
-                <Link
-                  key={link.id}
-                  to={link.path}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-2xl font-display text-mist-300 hover:text-gold-400"
-                  style={{ transition: 'all 480ms cubic-bezier(.16,1,.3,1)' }}
-                >
-                  {link.label}
-                </Link>
-              ) : (
-                <button
-                  key={link.id}
-                  onClick={() => handleNavClick(link)}
-                  className="text-2xl font-display text-mist-300 hover:text-gold-400"
-                  style={{ transition: 'all 480ms cubic-bezier(.16,1,.3,1)' }}
-                >
-                  {link.label}
-                </button>
-              )
+              <Link
+                key={link.id}
+                to={link.path}
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-2xl font-display text-mist-300 hover:text-gold-400"
+                style={{ transition: 'all 480ms cubic-bezier(.16,1,.3,1)' }}
+              >
+                {link.label}
+              </Link>
             ))}
           </div>
         </div>

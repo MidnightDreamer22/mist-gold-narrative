@@ -8,6 +8,8 @@ import CinematicBackground from "./components/CinematicBackground";
 import Index from "./pages/Index";
 import IntroReserve from "./pages/IntroReserve";
 import History from "./pages/History";
+import Menu from "./pages/Menu";
+import Reservation from "./pages/Reservation";
 import Shop from "./pages/Shop";
 import Product from "./pages/Product";
 import Checkout from "./pages/Checkout";
@@ -16,13 +18,15 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const AppContent = ({ handleNavigate }: { handleNavigate: (panel: string) => void }) => {
+const AppContent = () => {
   const location = useLocation();
   const hideBackground = location.pathname.startsWith('/shop') || 
                         location.pathname.startsWith('/product') || 
                         location.pathname === '/checkout' ||
                         location.pathname.startsWith('/order-confirmation') ||
-                        location.pathname === '/history';
+                        location.pathname === '/history' ||
+                        location.pathname === '/menu' ||
+                        location.pathname === '/reservation';
 
   return (
     <>
@@ -32,13 +36,15 @@ const AppContent = ({ handleNavigate }: { handleNavigate: (panel: string) => voi
       {/* Film grain overlay */}
       <div className="grain-overlay" />
       
-      <Navigation onNavigate={handleNavigate} />
+      <Navigation />
       
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/intro-reserve" element={<IntroReserve />} />
         <Route path="/dive-in" element={<IntroReserve />} />
         <Route path="/history" element={<History />} />
+        <Route path="/menu" element={<Menu />} />
+        <Route path="/reservation" element={<Reservation />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/product/:handle" element={<Product />} />
         <Route path="/checkout" element={<Checkout />} />
@@ -51,18 +57,13 @@ const AppContent = ({ handleNavigate }: { handleNavigate: (panel: string) => voi
 };
 
 const App = () => {
-  const handleNavigate = (panel: string) => {
-    // Dispatch custom event that Index will listen to
-    window.dispatchEvent(new CustomEvent('navigate-panel', { detail: { panel } }));
-  };
-
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <AppContent handleNavigate={handleNavigate} />
+          <AppContent />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
