@@ -253,12 +253,45 @@ const ReservationPanel = () => {
                   <Label htmlFor="time" className="text-mist-100">Selected Time *</Label>
                   <Input
                     id="time"
-                    value={formData.time || 'Click a time slot →'}
+                    value={formData.time || 'Select a time slot below'}
                     readOnly
                     className="bg-ink-900 !bg-opacity-100 border-border text-mist-300"
                     placeholder="Select from available times"
                   />
                 </div>
+
+                {/* Time Slot Grid */}
+                {date && formData.partySize && (
+                  <div className="space-y-2">
+                    <Label className="text-mist-100">Available Times</Label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {availableSlots.map((slot) => (
+                        <Button
+                          key={slot.time}
+                          type="button"
+                          variant={formData.time === slot.time ? "default" : "outline"}
+                          disabled={!slot.available}
+                          onClick={() => setFormData({ ...formData, time: slot.time })}
+                          className={cn(
+                            "text-sm",
+                            formData.time === slot.time 
+                              ? "bg-gold-400 text-ink-900 hover:bg-gold-300" 
+                              : slot.available
+                              ? "bg-ink-900 border-border text-mist-300 hover:bg-ink-700"
+                              : "bg-ink-800 border-border text-mist-500 opacity-50 cursor-not-allowed"
+                          )}
+                        >
+                          {slot.time}
+                        </Button>
+                      ))}
+                    </div>
+                    {availableSlots.length === 0 && (
+                      <p className="text-sm text-mist-400 italic">
+                        Please select a date and party size to see available times
+                      </p>
+                    )}
+                  </div>
+                )}
 
                 <div className="space-y-2">
                   <Label htmlFor="notes" className="text-mist-100">Special Requests / Occasion</Label>
