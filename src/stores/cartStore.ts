@@ -30,6 +30,7 @@ interface CartStore {
   setCartId: (cartId: string) => void;
   setCheckoutUrl: (url: string) => void;
   setLoading: (loading: boolean) => void;
+  // Legacy Shopify checkout method - kept for compatibility but not used in new checkout flow
   createCheckout: () => Promise<void>;
 }
 
