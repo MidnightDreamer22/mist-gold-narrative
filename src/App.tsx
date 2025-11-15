@@ -10,13 +10,19 @@ import IntroReserve from "./pages/IntroReserve";
 import History from "./pages/History";
 import Shop from "./pages/Shop";
 import Product from "./pages/Product";
+import Checkout from "./pages/Checkout";
+import OrderConfirmation from "./pages/OrderConfirmation";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
 const AppContent = ({ handleNavigate }: { handleNavigate: (panel: string) => void }) => {
   const location = useLocation();
-  const hideBackground = location.pathname.startsWith('/shop') || location.pathname.startsWith('/product') || location.pathname === '/history';
+  const hideBackground = location.pathname.startsWith('/shop') || 
+                        location.pathname.startsWith('/product') || 
+                        location.pathname === '/checkout' ||
+                        location.pathname.startsWith('/order-confirmation') ||
+                        location.pathname === '/history';
 
   return (
     <>
@@ -35,6 +41,8 @@ const AppContent = ({ handleNavigate }: { handleNavigate: (panel: string) => voi
         <Route path="/history" element={<History />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/product/:handle" element={<Product />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
