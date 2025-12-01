@@ -118,7 +118,7 @@ const DiveInModal = ({ isOpen, onClose }: DiveInModalProps) => {
                     <p className="text-sm text-mist-300 mb-3">Prefer to message us?</p>
                     <div className="flex gap-2">
                       <a
-                        href="https://instagram.com"
+                        href="https://www.instagram.com/simonagathers/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-xs text-gold-400 hover:underline"
@@ -127,7 +127,7 @@ const DiveInModal = ({ isOpen, onClose }: DiveInModalProps) => {
                       </a>
                       <span className="text-mist-500">•</span>
                       <a
-                        href="https://facebook.com"
+                        href="https://www.facebook.com/simonabarhome/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-xs text-gold-400 hover:underline"
@@ -202,7 +202,7 @@ const DiveInModal = ({ isOpen, onClose }: DiveInModalProps) => {
                   <ul className="text-sm text-mist-300 space-y-1">
                     <li>• Reservations held for 15 minutes</li>
                     <li>• Walk-ins welcome based on availability</li>
-                    <li>• Contact: simonebarhome@gmail.com</li>
+                    <li>• Contact: <a href="mailto:cheers@simona.bar" className="text-gold-400 hover:underline">cheers@simona.bar</a></li>
                   </ul>
                 </div>
               </div>
