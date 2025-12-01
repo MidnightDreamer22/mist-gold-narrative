@@ -15,7 +15,9 @@ import Shop from "./pages/Shop";
 import Product from "./pages/Product";
 import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/OrderConfirmation";
+import Privacy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
+import Footer from "./components/Footer";
 
 const queryClient = new QueryClient();
 
@@ -27,7 +29,11 @@ const AppContent = () => {
                         location.pathname.startsWith('/order-confirmation') ||
                         location.pathname === '/history' ||
                         location.pathname === '/menu' ||
-                        location.pathname === '/reservation';
+                        location.pathname === '/reservation' ||
+                        location.pathname === '/privacy';
+  
+  const hideFooter = location.pathname === '/checkout' ||
+                     location.pathname.startsWith('/order-confirmation');
 
   return (
     <>
@@ -50,9 +56,12 @@ const AppContent = () => {
         <Route path="/product/:handle" element={<Product />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
+        <Route path="/privacy" element={<Privacy />} />
         {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
+      
+      {!hideFooter && <Footer />}
     </>
   );
 };

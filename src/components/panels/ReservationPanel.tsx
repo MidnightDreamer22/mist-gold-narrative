@@ -80,7 +80,7 @@ const ReservationPanel = () => {
                       <div>
                         <h4 className="text-gold-400 font-semibold mb-2">Contact</h4>
                         <p>Phone: <a href="tel:+37495426619" className="text-gold-400 hover:underline">+374 95 426 619</a></p>
-                        <p>Email: <a href="mailto:simonebarhome@gmail.com" className="text-gold-400 hover:underline">simonebarhome@gmail.com</a></p>
+                        <p>Email: <a href="mailto:cheers@simona.bar" className="text-gold-400 hover:underline">cheers@simona.bar</a></p>
                         <p>Address: 80 Aram st, Yerevan, Armenia</p>
                       </div>
                     </div>

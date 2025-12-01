@@ -8,7 +8,6 @@ import MenuPanel from '@/components/panels/MenuPanel';
 import MenuDetailPanel from '@/components/panels/MenuDetailPanel';
 import ReservationPanel from '@/components/panels/ReservationPanel';
 import DiveInModal from '@/components/DiveInModal';
-import { useFooterReveal } from '@/hooks/useFooterReveal';
 import heroPoster from '@/assets/hero-video-poster.jpg';
 
 const Index = () => {
@@ -17,7 +16,6 @@ const Index = () => {
   const [activePanel, setActivePanel] = useState<string | null>(null);
   const [selectedMenuCategory, setSelectedMenuCategory] = useState<string | null>(null);
   const [diveInModalOpen, setDiveInModalOpen] = useState(false);
-  const { footerRef, isVisible: footerVisible } = useFooterReveal();
 
   useEffect(() => {
     // Show CTA after hero animation completes
@@ -290,96 +288,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Footer - wrapped in snap section */}
-      <section 
-        className="snap-section"
-        style={{ 
-          minHeight: '60vh',
-          scrollSnapAlign: 'end',
-          scrollSnapStop: 'always'
-        }}
-      >
-        <footer 
-          ref={footerRef}
-          className="relative z-10 border-t border-border py-16"
-          style={{
-            minHeight: '480px',
-            opacity: footerVisible ? 1 : 0,
-            transform: footerVisible ? 'translateY(0)' : 'translateY(10px)',
-            transition: 'opacity 480ms var(--easing-enter), transform 480ms var(--easing-enter)'
-          }}
-        >
-        <div className="container mx-auto px-6 max-w-6xl">
-          <div className="grid md:grid-cols-3 gap-12">
-            <div className="space-y-4">
-              <h3 className="text-2xl font-display text-mist-100">Location</h3>
-              <p className="text-mist-300 leading-relaxed">
-                80 Aram Street<br />
-                Yerevan, Armenia
-              </p>
-              <a 
-                href="https://maps.google.com/?q=80+Aram+Street,Yerevan,Armenia" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-block text-gold-400 hover:underline text-sm"
-              >
-                View on Map →
-              </a>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="text-2xl font-display text-mist-100">Hours</h3>
-              <p className="text-mist-300 leading-relaxed">
-                Every day<br />
-                <span className="text-gold-400 font-semibold">18:30 - 02:00</span>
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="text-2xl font-display text-mist-100">Contact</h3>
-              <div className="space-y-2 text-mist-300">
-                <p>
-                  <a href="tel:+37495426619" className="hover:text-gold-400 transition-colors">
-                    +374 95 426 619
-                  </a>
-                </p>
-                <p>
-                  <a href="mailto:simonebarhome@gmail.com" className="hover:text-gold-400 transition-colors">
-                    simonebarhome@gmail.com
-                  </a>
-                </p>
-                <div className="flex gap-4 mt-4">
-                  <a 
-                    href="https://instagram.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-gold-400 hover:text-gold-300 transition-colors"
-                    aria-label="Instagram"
-                  >
-                    Instagram
-                  </a>
-                  <a 
-                    href="https://facebook.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-gold-400 hover:text-gold-300 transition-colors"
-                    aria-label="Facebook"
-                  >
-                    Facebook
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-12 pt-8 border-t border-border text-center">
-            <p className="text-mist-300 text-sm">
-              © {new Date().getFullYear()} Simona. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
-      </section>
 
       {/* Panels */}
       <FullScreenPanel
