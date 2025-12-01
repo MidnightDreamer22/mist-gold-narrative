@@ -8,17 +8,29 @@ const SimonaGathersSection = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let cancelled = false;
+
     (async () => {
       try {
         const data = await fetchSimonaGathersMenu();
-        setItems(data);
+        if (!cancelled) {
+          setItems(data);
+        }
       } catch (err) {
         console.error('Failed to load Simona gathers menu', err);
-        setError('Menu temporarily unavailable');
+        if (!cancelled) {
+          setError('Menu temporarily unavailable');
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     })();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   return (
