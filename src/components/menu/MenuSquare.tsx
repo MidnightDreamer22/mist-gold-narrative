@@ -13,19 +13,39 @@ const MenuSquare = ({ config, index }: MenuSquareProps) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  if (!config) {
+    console.error('MenuSquare: missing config for index', index);
+    return null;
+  }
+
   useEffect(() => {
+    let cancelled = false;
+
     (async () => {
       try {
+        setLoading(true);
+        setError(null);
+
         const data = await fetchMenuBySource(config);
-        setItems(data);
+        if (!cancelled) {
+          setItems(data);
+        }
       } catch (err) {
         console.error(`Failed to load menu: ${config.id}`, err);
-        setError('Unavailable');
+        if (!cancelled) {
+          setError('Unavailable');
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     })();
-  }, [config]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [config.id, config.gid, config.sheetName]);
 
   return (
     <div
@@ -41,9 +61,11 @@ const MenuSquare = ({ config, index }: MenuSquareProps) => {
         <h3 className="text-2xl font-display text-mist-100 group-hover:text-gold-400 transition-colors">
           {config.label}
         </h3>
-        <p className="text-sm text-mist-300/70 mt-1">
-          {config.description}
-        </p>
+        {config.description && (
+          <p className="text-sm text-mist-300/70 mt-1">
+            {config.description}
+          </p>
+        )}
       </div>
 
       {/* Content */}
