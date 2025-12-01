@@ -4,8 +4,6 @@ import { Button } from '@/components/ui/button';
 import { ChevronDown } from 'lucide-react';
 import FullScreenPanel from '@/components/FullScreenPanel';
 import AboutPanel from '@/components/panels/AboutPanel';
-import MenuPanel from '@/components/panels/MenuPanel';
-import MenuDetailPanel from '@/components/panels/MenuDetailPanel';
 import ReservationPanel from '@/components/panels/ReservationPanel';
 import DiveInModal from '@/components/DiveInModal';
 import heroPoster from '@/assets/hero-video-poster.jpg';
@@ -14,7 +12,6 @@ const Index = () => {
   const navigate = useNavigate();
   const [showCTA, setShowCTA] = useState(false);
   const [activePanel, setActivePanel] = useState<string | null>(null);
-  const [selectedMenuCategory, setSelectedMenuCategory] = useState<string | null>(null);
   const [diveInModalOpen, setDiveInModalOpen] = useState(false);
 
   useEffect(() => {
@@ -31,29 +28,14 @@ const Index = () => {
 
   const openPanel = (panel: string) => {
     setActivePanel(panel);
-    setSelectedMenuCategory(null);
   };
 
   const closePanel = () => {
     setActivePanel(null);
-    setSelectedMenuCategory(null);
   };
 
   const openReservation = () => {
     setActivePanel('reservation');
-  };
-
-  const handleMenuCategorySelect = (categoryId: string) => {
-    setSelectedMenuCategory(categoryId);
-  };
-
-  const getCategoryTitle = (id: string) => {
-    const titles: Record<string, string> = {
-      classics: "Simona's Classics",
-      paloma: "Paloma List",
-      spirit: "Spirit of the City"
-    };
-    return titles[id] || id;
   };
 
   // Listen for navigation events from Navigation component
@@ -230,7 +212,7 @@ const Index = () => {
                 innovative creations inspired by the city.
               </p>
               <Button
-                onClick={() => openPanel('menu')}
+                onClick={() => navigate('/menu')}
                 size="lg"
                 className="bg-gold-400 hover:bg-gold-300 text-ink-900 text-lg px-8 py-6 rounded-full font-semibold"
               >
@@ -296,22 +278,6 @@ const Index = () => {
         title="About Simona"
       >
         <AboutPanel />
-      </FullScreenPanel>
-
-      <FullScreenPanel
-        isOpen={activePanel === 'menu'}
-        onClose={closePanel}
-        title={selectedMenuCategory ? getCategoryTitle(selectedMenuCategory) : "Menu"}
-      >
-        {selectedMenuCategory ? (
-          <MenuDetailPanel
-            categoryId={selectedMenuCategory}
-            categoryTitle={getCategoryTitle(selectedMenuCategory)}
-            onBack={() => setSelectedMenuCategory(null)}
-          />
-        ) : (
-          <MenuPanel onSelectCategory={handleMenuCategorySelect} />
-        )}
       </FullScreenPanel>
 
       <FullScreenPanel
