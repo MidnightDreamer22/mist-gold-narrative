@@ -28,7 +28,7 @@ const AppContent = () => {
                         location.pathname === '/checkout' ||
                         location.pathname.startsWith('/order-confirmation') ||
                         location.pathname === '/history' ||
-                        location.pathname === '/menu' ||
+                        location.pathname.startsWith('/menu') ||
                         location.pathname === '/reservation' ||
                         location.pathname === '/privacy';
   
@@ -51,6 +51,7 @@ const AppContent = () => {
         <Route path="/dive-in" element={<IntroReserve />} />
         <Route path="/history" element={<History />} />
         <Route path="/menu" element={<Menu />} />
+        <Route path="/menu/:menuId" element={<Menu />} />
         <Route path="/reservation" element={<Reservation />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/product/:handle" element={<Product />} />
