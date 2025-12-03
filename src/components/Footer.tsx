@@ -7,11 +7,9 @@ const Footer = () => {
 
   return (
     <section 
-      className="snap-section"
+      className="relative"
       style={{ 
-        minHeight: '60vh',
-        scrollSnapAlign: 'end',
-        scrollSnapStop: 'always'
+        minHeight: '60vh'
       }}
     >
       <footer 
