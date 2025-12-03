@@ -1,31 +1,29 @@
-import MenuPanel from '@/components/panels/MenuPanel';
-import MenuDetailPanel from '@/components/panels/MenuDetailPanel';
-import { useState } from 'react';
+import MenuCategoryCard from '@/components/menu/MenuCategoryCard';
 
 const Menu = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-
-  const getCategoryTitle = (id: string) => {
-    const titles: Record<string, string> = {
-      classics: "Simona's Classics",
-      paloma: "Paloma List",
-      spirit: "Spirit of the City"
-    };
-    return titles[id] || id;
-  };
-
   return (
     <div className="min-h-screen pt-20 pb-16 px-6 bg-ink-950">
-      <div className="max-w-4xl mx-auto">
-        {selectedCategory ? (
-          <MenuDetailPanel 
-            categoryId={selectedCategory}
-            categoryTitle={getCategoryTitle(selectedCategory)}
-            onBack={() => setSelectedCategory(null)}
+      <div className="max-w-5xl mx-auto space-y-10">
+        {/* Title */}
+        <h1 className="text-4xl md:text-5xl font-display text-mist-100 text-center">
+          Menu
+        </h1>
+
+        {/* 3 categories */}
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <MenuCategoryCard
+            title="Wine & Spirit"
+            subtitle="Bottles, pours and neat serves."
           />
-        ) : (
-          <MenuPanel onSelectCategory={setSelectedCategory} />
-        )}
+          <MenuCategoryCard
+            title="Cocktails"
+            subtitle="Signatures and reimagined classics."
+          />
+          <MenuCategoryCard
+            title="Food & Snacks"
+            subtitle="Small plates and late-night bites."
+          />
+        </section>
       </div>
     </div>
   );
