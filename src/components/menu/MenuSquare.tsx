@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Loader2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Loader2, ArrowRight } from 'lucide-react';
 import { MenuSourceConfig } from '@/config/menuConfig';
 import { fetchMenuBySource, CocktailItem } from '@/lib/menu-sheets';
 
@@ -12,6 +13,7 @@ const MenuSquare = ({ config, index }: MenuSquareProps) => {
   const [items, setItems] = useState<CocktailItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   if (!config) {
     console.error('MenuSquare: missing config for index', index);
@@ -49,7 +51,7 @@ const MenuSquare = ({ config, index }: MenuSquareProps) => {
 
   return (
     <div
-      className="group relative overflow-hidden rounded-lg border border-border bg-ink-800/50 p-6 transition-all duration-500 hover:border-gold-400/50"
+      className="group relative overflow-hidden rounded-lg border border-border bg-ink-800/50 p-6 transition-all duration-500 hover:border-gold-400/50 flex flex-col"
       style={{
         animation: `fadeInScale 600ms cubic-bezier(.16,1,.3,1) forwards`,
         animationDelay: `${index * 80}ms`,
@@ -69,42 +71,58 @@ const MenuSquare = ({ config, index }: MenuSquareProps) => {
       </div>
 
       {/* Content */}
-      {loading && (
-        <div className="flex items-center justify-center py-8">
-          <Loader2 className="w-6 h-6 text-gold-400 animate-spin" />
-        </div>
-      )}
-      
-      {!loading && (error || items.length === 0) && (
-        <p className="text-mist-300/50 text-sm py-4">
-          {error ?? 'Coming soon'}
-        </p>
-      )}
-      
-      {!loading && !error && items.length > 0 && (
-        <div className="space-y-4 max-h-80 overflow-y-auto pr-2">
-          {items.map((item) => (
-            <div
-              key={item.id}
-              className="border-b border-border/30 last:border-b-0 pb-3 last:pb-0"
-            >
-              <div className="flex items-baseline justify-between gap-2">
-                <span className="text-mist-100 font-medium">{item.name}</span>
-                {item.price && (
-                  <span className="text-gold-400 text-sm whitespace-nowrap">
-                    {item.price}
-                  </span>
+      <div className="flex-1">
+        {loading && (
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="w-6 h-6 text-gold-400 animate-spin" />
+          </div>
+        )}
+        
+        {!loading && (error || items.length === 0) && (
+          <p className="text-mist-300/50 text-sm py-4">
+            {error ?? 'Coming soon'}
+          </p>
+        )}
+        
+        {!loading && !error && items.length > 0 && (
+          <div className="space-y-4 max-h-64 overflow-y-auto pr-2">
+            {items.slice(0, 4).map((item) => (
+              <div
+                key={item.id}
+                className="border-b border-border/30 last:border-b-0 pb-3 last:pb-0"
+              >
+                <div className="flex items-baseline justify-between gap-2">
+                  <span className="text-mist-100 font-medium">{item.name}</span>
+                  {item.price && (
+                    <span className="text-gold-400 text-sm whitespace-nowrap">
+                      {item.price}
+                    </span>
+                  )}
+                </div>
+                {item.description && (
+                  <p className="text-xs text-mist-300/60 mt-1 line-clamp-2">
+                    {item.description}
+                  </p>
                 )}
               </div>
-              {item.description && (
-                <p className="text-xs text-mist-300/60 mt-1 line-clamp-2">
-                  {item.description}
-                </p>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+            {items.length > 4 && (
+              <p className="text-xs text-mist-300/50">
+                +{items.length - 4} more items...
+              </p>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* CTA Button */}
+      <button
+        onClick={() => navigate(`/menu/${config.id}`)}
+        className="mt-4 flex items-center justify-center gap-2 text-xs uppercase tracking-wide border border-border rounded-full px-4 py-2 text-mist-200 hover:border-gold-400 hover:text-gold-300 transition-colors w-full"
+      >
+        View full menu
+        <ArrowRight className="w-3 h-3" />
+      </button>
     </div>
   );
 };

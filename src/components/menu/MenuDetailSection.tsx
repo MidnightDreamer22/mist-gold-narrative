@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Loader2, ArrowRight } from 'lucide-react';
-import { fetchSimonaGathersMenu, CocktailItem } from '@/lib/menu-sheets';
+import { Loader2, ArrowLeft } from 'lucide-react';
+import { MenuSourceConfig } from '@/config/menuConfig';
+import { fetchMenuBySource, CocktailItem } from '@/lib/menu-sheets';
 
-const SimonaGathersSection = () => {
+interface MenuDetailSectionProps {
+  config: MenuSourceConfig;
+}
+
+const MenuDetailSection = ({ config }: MenuDetailSectionProps) => {
   const [items, setItems] = useState<CocktailItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -14,45 +19,50 @@ const SimonaGathersSection = () => {
 
     (async () => {
       try {
-        const data = await fetchSimonaGathersMenu();
+        setLoading(true);
+        setError(null);
+        const data = await fetchMenuBySource(config);
         if (!cancelled) {
           setItems(data);
         }
       } catch (err) {
-        console.error('Failed to load Simona gathers menu', err);
-        if (!cancelled) {
-          setError('Menu temporarily unavailable');
-        }
+        console.error('Failed to load menu detail', err);
+        if (!cancelled) setError('Menu unavailable');
       } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
+        if (!cancelled) setLoading(false);
       }
     })();
 
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [config.id, config.gid, config.sheetName]);
 
   return (
     <section 
-      className="space-y-4"
+      className="space-y-6"
       style={{
         animation: 'fadeInScale 600ms cubic-bezier(.16,1,.3,1) forwards',
         opacity: 0
       }}
     >
       <div className="flex items-center justify-between gap-4">
-        <h2 className="text-3xl md:text-4xl font-display text-gold-400 tracking-wide">
-          Simona gathers
-        </h2>
+        <div>
+          <h2 className="text-3xl md:text-4xl font-display text-gold-400">
+            {config.label}
+          </h2>
+          {config.description && (
+            <p className="text-sm text-mist-300/70 mt-1">
+              {config.description}
+            </p>
+          )}
+        </div>
         <button
-          onClick={() => navigate('/menu/simona-gathers')}
-          className="flex items-center gap-2 text-xs uppercase tracking-wide border border-border rounded-full px-4 py-2 text-mist-200 hover:border-gold-400 hover:text-gold-300 transition-colors"
+          onClick={() => navigate('/menu')}
+          className="flex items-center gap-2 text-sm border border-border rounded-full px-4 py-2 text-mist-200 hover:border-gold-400 hover:text-gold-300 transition-colors"
         >
-          View full menu
-          <ArrowRight className="w-3 h-3" />
+          <ArrowLeft className="w-4 h-4" />
+          Back to all menus
         </button>
       </div>
 
@@ -62,16 +72,16 @@ const SimonaGathersSection = () => {
             <Loader2 className="w-8 h-8 text-gold-400 animate-spin" />
           </div>
         )}
-        
+
         {!loading && (error || items.length === 0) && (
           <p className="text-mist-300/70 text-center py-4">
             {error ?? 'Menu will be updated soon.'}
           </p>
         )}
-        
+
         {!loading && !error && items.length > 0 && (
           <div className="space-y-6">
-            {items.slice(0, 5).map((item, index) => (
+            {items.map((item, index) => (
               <div
                 key={item.id}
                 className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 border-b border-border/50 last:border-b-0 pb-6 last:pb-0"
@@ -98,11 +108,6 @@ const SimonaGathersSection = () => {
                 )}
               </div>
             ))}
-            {items.length > 5 && (
-              <p className="text-sm text-mist-300/50 text-center">
-                +{items.length - 5} more items...
-              </p>
-            )}
           </div>
         )}
       </div>
@@ -110,4 +115,4 @@ const SimonaGathersSection = () => {
   );
 };
 
-export default SimonaGathersSection;
+export default MenuDetailSection;
