@@ -91,15 +91,7 @@ All colors MUST be HSL.
   
 html {
   scroll-behavior: smooth;
-  scroll-snap-type: y mandatory;
-  overscroll-behavior-y: contain;
 }
-  
-  .snap-section {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    min-height: 100vh;
-  }
   
   /* Dropdown transition effect - smooth entrance */
   .section-content {
