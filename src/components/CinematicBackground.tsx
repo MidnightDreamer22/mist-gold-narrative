@@ -34,11 +34,12 @@ const CinematicBackground = () => {
           playsInline
           preload="auto"
           onCanPlayThrough={() => setVideoLoaded(true)}
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+          className="absolute inset-0 w-full h-full min-w-full min-h-full object-cover object-center transition-opacity duration-700"
           style={{
             opacity: videoLoaded ? 1 : 0,
-            transform: 'translateZ(0)',
-            willChange: 'opacity'
+            transform: 'scale(1.06)',
+            transformOrigin: 'center center',
+            willChange: 'opacity, transform'
           }}
         >
           <source src={heroVideo} type="video/mp4" />
