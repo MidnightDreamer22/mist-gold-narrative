@@ -183,6 +183,29 @@ html {
     -webkit-backdrop-filter: var(--frost-blur);
   }
   
+  /* Hero video responsive zoom - crops baked-in letterboxing */
+  .hero-video {
+    transform: scale(1.18);
+  }
+  
+  @media (min-width: 768px) {
+    .hero-video {
+      transform: scale(1.24);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .hero-video {
+      transform: scale(1.30);
+    }
+  }
+  
+  @media (min-width: 1440px) {
+    .hero-video {
+      transform: scale(1.36);
+    }
+  }
+  
   /* Reduced motion support */
   @media (prefers-reduced-motion: reduce) {
     html {
