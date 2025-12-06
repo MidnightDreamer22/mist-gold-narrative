@@ -14,14 +14,17 @@ const Menu = () => {
           <MenuCategoryCard
             title="Wine & Spirit"
             subtitle="Bottles, pours and neat serves."
+            href="/menus/simona-spirits-menu.pdf"
           />
           <MenuCategoryCard
             title="Cocktails"
             subtitle="Signatures and reimagined classics."
+            href="/menus/simona-cocktail-menu.pdf"
           />
           <MenuCategoryCard
             title="Food & Snacks"
             subtitle="Small plates and late-night bites."
+            href="/menus/simona-food-menu.pdf"
           />
         </section>
       </div>
