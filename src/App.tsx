@@ -40,8 +40,6 @@ const AppContent = () => {
       {/* Cinematic Background Layer - Hidden on shop pages */}
       {!hideBackground && <CinematicBackground />}
       
-      {/* Film grain overlay */}
-      <div className="grain-overlay" />
       
       <Navigation />
       
